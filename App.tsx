@@ -1,10 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
+import { View, Text } from 'react-native';
 
 export default function App() {
     return (
-        <View className="flex-1 items-center justify-center bg-white">
-            <Text>Hello world</Text>
+        <View>
+            <View>
+                <Text>1</Text>
+            </View>
+
+            <View>
+                <Text>1</Text>
+            </View>
             <StatusBar style="auto" />
         </View>
     );
