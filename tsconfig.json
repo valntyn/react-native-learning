@@ -8,6 +8,11 @@
     "allowJs": true,
     "moduleResolution": "node",
     "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -17,5 +22,6 @@
     "compilerOptions": {
       "module": "CommonJS"
     }
-  }
+  },
+  "extends": "expo/tsconfig.base"
 }
