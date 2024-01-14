@@ -1,37 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { View, Text, StyleSheet } from 'react-native';
-import { StoreProvider } from './src/app/providers/StoreProvider';
-
-const styles = StyleSheet.create({
-    box: {
-        backgroundColor: 'tomato',
-        height: 300,
-        padding: 10,
-        width: 300,
-    },
-    container: {
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        flex: 1,
-        gap: 10,
-        justifyContent: 'center',
-    },
-    text: {},
-});
+import { NavigationContainer } from '@react-navigation/native';
+import { StoreProvider } from '@/app/providers/StoreProvider';
+import AppRouter from '@/app/providers/navigation/AppRouter';
 
 export default function App() {
     return (
-        <StoreProvider>
-            <View style={styles.container}>
-                <View style={styles.box}>
-                    <Text style={styles.text}>1</Text>
-                </View>
-
-                <View style={styles.box}>
-                    <Text>1</Text>
-                </View>
-                <StatusBar style="auto" />
-            </View>
-        </StoreProvider>
+        <NavigationContainer>
+            <StoreProvider>
+                <AppRouter />
+            </StoreProvider>
+        </NavigationContainer>
     );
 }
