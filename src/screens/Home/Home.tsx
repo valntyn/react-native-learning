@@ -1,16 +1,12 @@
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import {
-    FlatList, StyleSheet, Text, View,
+    FlatList, Pressable, StyleSheet, Text, View,
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import { Inter_900Black as Inter900Black, useFonts } from '@expo-google-fonts/inter';
-import * as SplashScreen from 'expo-splash-screen';
+import { NativeStackScreenProps } from 'react-native-screens/native-stack';
+import { RootStackParamList } from '@/shared/lib/config/routeConfig/routeConfig';
+import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
 
 const days = [...Array(24)].map((el, i) => i + 1);
-
-const Stack = createNativeStackNavigator();
-SplashScreen.preventAutoHideAsync();
 
 const styles = StyleSheet.create({
     box: {
@@ -35,25 +31,25 @@ const styles = StyleSheet.create({
     },
 });
 
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
 export const Home = memo(() => {
-    const [fontsLoaded, fontError] = useFonts({
-        Inter: Inter900Black,
-    });
-
-    useEffect(() => {
-        if (fontsLoaded || fontError) {
-            SplashScreen.hideAsync();
-        }
-    }, [fontsLoaded, fontError]);
-
-    if (!fontsLoaded && !fontError) {
-        return null;
-    }
+    const navigation = useAppNavigation();
 
     const getDayItem = ({ item }: { item: number }) => (
-        <View style={styles.box}>
+        <Pressable style={styles.box} onPress={() => navigation.navigate('Initial')}>
             <Text style={styles.text}>{item}</Text>
-        </View>
+        </Pressable>
+    );
+
+    const a = (
+        <FlatList
+            data={days}
+            renderItem={getDayItem}
+            numColumns={2}
+            contentContainerStyle={styles.content}
+            columnWrapperStyle={styles.column}
+        />
     );
 
     return (
@@ -65,8 +61,6 @@ export const Home = memo(() => {
                 contentContainerStyle={styles.content}
                 columnWrapperStyle={styles.column}
             />
-
-            <StatusBar style="auto" />
         </View>
     );
 });

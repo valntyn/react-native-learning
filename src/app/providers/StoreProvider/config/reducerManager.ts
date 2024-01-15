@@ -37,11 +37,7 @@ export function createReducerManager(
                 return;
             }
 
-            // temp ' ts ignore ' while reducers are absent
-
-            // @ts-ignore
             reducers[key] = reducer;
-            // @ts-ignore
             mountedReducers[key] = true;
             combinedReducer = combineReducers(reducers);
         },

@@ -1,33 +1,35 @@
 import { ComponentType } from 'react';
 import { Home } from '@/screens/Home/Home';
+import { Initial } from '@/screens/Initial/ui/Initial';
 
-export enum AppRouter {
-    MAIN = 'main',
-    ABOUT = 'about',
+export enum AppRouterEnum {
+    HOME = 'Home',
+    INITIAL = 'Initial',
 }
 
-type RootStackParamList = {
+export type RootStackParamList = {
     Home: undefined;
-    About: undefined;
+    Initial: undefined;
 };
 
 export interface RouteParams {
     name: keyof RootStackParamList;
     component: ComponentType;
+    authOnly?: boolean;
 }
 
-export const RoutePath: Record<AppRouter, keyof RootStackParamList> = {
-    [AppRouter.MAIN]: 'Home',
-    [AppRouter.ABOUT]: 'About',
+export const RoutePath: Record<AppRouterEnum, keyof RootStackParamList> = {
+    [AppRouterEnum.HOME]: 'Home',
+    [AppRouterEnum.INITIAL]: 'Initial',
 };
 
-export const routeConfig: Record<AppRouter, RouteParams> = {
-    [AppRouter.MAIN]: {
-        name: RoutePath.main,
+export const routeConfig: Record<AppRouterEnum, RouteParams> = {
+    [AppRouterEnum.HOME]: {
+        name: RoutePath.Home,
         component: Home,
     },
-    [AppRouter.ABOUT]: {
-        name: RoutePath.about,
-        component: Home,
+    [AppRouterEnum.INITIAL]: {
+        name: RoutePath.Initial,
+        component: Initial,
     },
 };

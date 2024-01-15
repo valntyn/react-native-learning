@@ -1,10 +1,16 @@
 import {
-    AnyAction, CombinedState, EnhancedStore, Reducer, ReducersMapObject,
+    AnyAction,
+    CombinedState,
+    EnhancedStore,
+    Reducer,
+    ReducersMapObject,
 } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
+import { UserSchema } from '@/entities/User';
 
 export interface StateSchema {
-
+    // REQUIRED
+    user: UserSchema;
 }
 
 export type OptionalRecord<K extends keyof any, T> = {
