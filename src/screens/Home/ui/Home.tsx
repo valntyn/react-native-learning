@@ -37,7 +37,7 @@ export const Home = memo(() => {
     const navigation = useAppNavigation();
 
     const getDayItem = ({ item }: { item: number }) => (
-        <Pressable style={styles.box}>
+        <Pressable style={styles.box} onPress={() => navigation.navigate('Todo')}>
             <Text style={styles.text}>{item}</Text>
         </Pressable>
     );

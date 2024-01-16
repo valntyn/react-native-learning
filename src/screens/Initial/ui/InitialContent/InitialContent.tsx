@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
 interface InitialContentProps {
     data: StepsInterface;
     positionIndex: number;
+    quantity: number;
     onContinue: () => void;
     onSkip: () => void;
     onBack: () => void;
@@ -41,7 +42,7 @@ interface InitialContentProps {
 
 export const InitialContent = memo((props: InitialContentProps) => {
     const {
-        data, onContinue, onSkip, onBack, positionIndex,
+        data, onContinue, onSkip, onBack, positionIndex, quantity,
     } = props;
 
     const swipes = Gesture.Simultaneous(
@@ -58,6 +59,8 @@ export const InitialContent = memo((props: InitialContentProps) => {
                 onBack();
             }),
     );
+
+    const isLast = quantity - 1 === positionIndex;
 
     return (
         <GestureDetector gesture={swipes}>
@@ -76,7 +79,7 @@ export const InitialContent = memo((props: InitialContentProps) => {
                     <Animated.Text entering={SlideInRight.delay(200)} style={styles.description}>
                         {data.description}
                     </Animated.Text>
-                    <ActionButtons onContinue={onContinue} onSkip={onSkip} />
+                    <ActionButtons onContinue={onContinue} onSkip={onSkip} last={isLast} />
                 </View>
             </View>
         </GestureDetector>

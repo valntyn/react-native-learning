@@ -31,19 +31,26 @@ const styles = StyleSheet.create({
 interface ActionButtonsProps {
     onContinue: () => void;
     onSkip: () => void;
+    last: boolean;
 }
 
 export const ActionButtons = memo((props: ActionButtonsProps) => {
-    const { onContinue, onSkip } = props;
+    const { onContinue, onSkip, last } = props;
 
     return (
         <View style={styles.buttons}>
             <Text style={styles.buttonText} onPress={onSkip}>
                 Skip
             </Text>
-            <Pressable style={styles.button} onPress={onContinue}>
-                <Text style={styles.buttonText}>Continue</Text>
-            </Pressable>
+            {last ? (
+                <Pressable style={styles.button} onPress={onSkip}>
+                    <Text style={styles.buttonText}>Start</Text>
+                </Pressable>
+            ) : (
+                <Pressable style={styles.button} onPress={onContinue}>
+                    <Text style={styles.buttonText}>Continue</Text>
+                </Pressable>
+            )}
         </View>
     );
 });

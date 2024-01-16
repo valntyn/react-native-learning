@@ -25,17 +25,10 @@ export const Initial = memo(() => {
     const navigation = useAppNavigation();
 
     const onContinue = useCallback(() => {
-        const isLastScreen = positionIndex === onboardingSteps.length - 1;
-
-        if (isLastScreen) {
-            setPositionIndex(0);
-        } else {
-            setPositionIndex((prev) => prev + 1);
-        }
-    }, [positionIndex]);
+        setPositionIndex((prev) => prev + 1);
+    }, []);
 
     const onSkip = useCallback(() => {
-        setPositionIndex(0);
         navigation.navigate(AppRouterEnum.HOME);
     }, [navigation]);
 
@@ -59,6 +52,7 @@ export const Initial = memo(() => {
                     onSkip={onSkip}
                     onBack={onBack}
                     positionIndex={positionIndex}
+                    quantity={onboardingSteps.length}
                 />
             </View>
         </SafeAreaView>
