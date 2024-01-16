@@ -37,23 +37,13 @@ export const Home = memo(() => {
     const navigation = useAppNavigation();
 
     const getDayItem = ({ item }: { item: number }) => (
-        <Pressable style={styles.box} onPress={() => navigation.navigate('Initial')}>
+        <Pressable style={styles.box}>
             <Text style={styles.text}>{item}</Text>
         </Pressable>
     );
 
-    const a = (
-        <FlatList
-            data={days}
-            renderItem={getDayItem}
-            numColumns={2}
-            contentContainerStyle={styles.content}
-            columnWrapperStyle={styles.column}
-        />
-    );
-
     return (
-        <View className="bg-[#1e1c2e] flex-1">
+        <View className="p-4">
             <FlatList
                 data={days}
                 renderItem={getDayItem}

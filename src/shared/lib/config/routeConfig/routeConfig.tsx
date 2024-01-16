@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
-import { Home } from '@/screens/Home/Home';
-import { Initial } from '@/screens/Initial/ui/Initial';
+import { Initial } from '@/screens/Initial';
+import { Home } from '@/screens/Home';
 
 export enum AppRouterEnum {
     HOME = 'Home',
@@ -16,6 +16,7 @@ export interface RouteParams {
     name: keyof RootStackParamList;
     component: ComponentType;
     authOnly?: boolean;
+    showHeader?: boolean;
 }
 
 export const RoutePath: Record<AppRouterEnum, keyof RootStackParamList> = {
@@ -31,5 +32,6 @@ export const routeConfig: Record<AppRouterEnum, RouteParams> = {
     [AppRouterEnum.INITIAL]: {
         name: RoutePath.Initial,
         component: Initial,
+        showHeader: false,
     },
 };

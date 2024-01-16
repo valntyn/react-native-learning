@@ -1,6 +1,7 @@
 import { memo, useCallback, useState } from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+    SafeAreaView, StatusBar, StyleSheet, View,
+} from 'react-native';
 import { onboardingSteps } from '../const';
 import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
 import { Indicators } from './Indicators/Indicators';
@@ -47,17 +48,19 @@ export const Initial = memo(() => {
     }, [positionIndex]);
 
     return (
-        <SafeAreaView style={styles.page}>
-            <StatusBar barStyle="default" />
+        <SafeAreaView className="flex-1 bg-[#15141a]">
+            <View style={styles.page}>
+                <StatusBar barStyle="default" />
 
-            <Indicators positionIndex={positionIndex} />
-            <InitialContent
-                data={data}
-                onContinue={onContinue}
-                onSkip={onSkip}
-                onBack={onBack}
-                positionIndex={positionIndex}
-            />
+                <Indicators positionIndex={positionIndex} />
+                <InitialContent
+                    data={data}
+                    onContinue={onContinue}
+                    onSkip={onSkip}
+                    onBack={onBack}
+                    positionIndex={positionIndex}
+                />
+            </View>
         </SafeAreaView>
     );
 });

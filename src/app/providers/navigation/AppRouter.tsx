@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { useSelector } from 'react-redux';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
     AppRouterEnum,
     routeConfig,
@@ -8,21 +8,25 @@ import {
 } from '@/shared/lib/config/routeConfig/routeConfig';
 import { getUserAuthData } from '@/entities/User';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const AppRouter = () => {
     const auth = useSelector(getUserAuthData);
     const renderWithWrapper = useCallback((route: RouteParams) => {
-        return <Stack.Screen name={route.name} component={route.component} key={route.name} />;
+        return (
+            <Stack.Screen
+                name={route.name}
+                component={route.component}
+                key={route.name}
+                options={{
+                    headerShown: route.showHeader,
+                }}
+            />
+        );
     }, []);
 
     return (
-        <Stack.Navigator
-            initialRouteName={auth ? AppRouterEnum.HOME : AppRouterEnum.INITIAL}
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
+        <Stack.Navigator initialRouteName={auth ? AppRouterEnum.HOME : AppRouterEnum.INITIAL}>
             {Object.values(routeConfig).map(renderWithWrapper)}
         </Stack.Navigator>
     );
