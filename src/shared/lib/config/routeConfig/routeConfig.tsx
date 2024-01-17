@@ -4,22 +4,22 @@ import { Home } from '@/screens/Home';
 import { SimpleTodo } from '@/screens/SimpleTodo';
 
 export enum AppRouterEnum {
-  HOME = 'Home',
-  INITIAL = 'Initial',
-  TODO = 'Todo',
+    HOME = 'Home',
+    INITIAL = 'Initial',
+    TODO = 'Todo',
 }
 
 export type RootStackParamList = {
-  Home: undefined;
-  Initial: undefined;
-  Todo: undefined;
+    Home: undefined;
+    Initial: undefined;
+    Todo: undefined;
 };
 
 export interface RouteParams {
-  name: keyof RootStackParamList;
-  component: ComponentType;
-  authOnly?: boolean;
-  showHeader?: boolean;
+    name: keyof RootStackParamList;
+    component: ComponentType;
+    authOnly?: boolean;
+    showHeader?: boolean;
 }
 
 export const RoutePath: Record<AppRouterEnum, keyof RootStackParamList> = {

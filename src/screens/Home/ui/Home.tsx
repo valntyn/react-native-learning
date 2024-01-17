@@ -2,8 +2,6 @@ import { memo } from 'react';
 import {
     FlatList, Pressable, StyleSheet, Text, View,
 } from 'react-native';
-import { NativeStackScreenProps } from 'react-native-screens/native-stack';
-import { RootStackParamList } from '@/shared/lib/config/routeConfig/routeConfig';
 import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
 
 const days = [...Array(24)].map((el, i) => i + 1);
@@ -30,8 +28,6 @@ const styles = StyleSheet.create({
         fontSize: 70,
     },
 });
-
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export const Home = memo(() => {
     const navigation = useAppNavigation();

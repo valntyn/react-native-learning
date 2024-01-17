@@ -1,4 +1,4 @@
-import { Dimensions, Pressable, Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import Animated, {
     FadeIn,
     runOnJS,
@@ -17,28 +17,28 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { GetTodo } from '@/entities/Todo';
 import { CustomCheckbox } from '@/shared/lib/ui/Checkbox';
 import { usePutTodos } from '@/entities/Todo/api/todoApi';
+import {
+    LIST_ITEM_HEIGHT,
+    LIST_ITEM_MARGIN,
+    SCREEN_WIDTH,
+    TRANSLATE_X_THRESHOLD,
+} from '@/entities/Todo/todo.config';
+import { todoItemStyles } from '@/entities/Todo/ui/TodoItem/styles';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(Pressable);
 
 interface TodoItemProps extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
     item: GetTodo;
-    onDelete: (id: string) => () => void;
+    onDelete: (id: string) => void;
     isDeleting?: boolean;
     className?: string;
 }
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.1;
-const LIST_ITEM_MARGIN = 16;
-const LIST_ITEM_HEIGHT = 50;
-
-// TODO need to refactor styles and decompose general logic
 export const TodoItem = memo((props: TodoItemProps) => {
     const {
         item, className, onDelete, isDeleting, simultaneousHandlers,
     } = props;
     const [putTodoMutation, { isLoading }] = usePutTodos();
-
     const [isChecked, setIsChecked] = useState(item.completed);
 
     const onChangeStatus = useCallback(
@@ -99,31 +99,13 @@ export const TodoItem = memo((props: TodoItemProps) => {
     });
 
     return (
-        <Animated.View
-            style={[
-                {
-                    position: 'relative',
-                    justifyContent: 'center',
-                },
-                rContainerTodoStyle,
-            ]}
-        >
-            <Animated.View
-                style={[
-                    {
-                        position: 'absolute',
-                        bottom: 12,
-                        right: 12,
-                    },
-                    rIconContainerStyle,
-                ]}
-            >
+        <Animated.View style={[todoItemStyles.container, rContainerTodoStyle]}>
+            <Animated.View style={[todoItemStyles.iconContainer, rIconContainerStyle]}>
                 <FontAwesome5
                     entering={FadeIn.duration(500)}
                     name="trash-alt"
                     size={24}
                     color="tomato"
-                    onPress={onDelete(item.id)}
                 />
             </Animated.View>
             <PanGestureHandler
@@ -134,19 +116,13 @@ export const TodoItem = memo((props: TodoItemProps) => {
                     entering={FadeIn.duration(500)}
                     onPress={() => onChangeStatus(!isChecked)}
                     style={[
-                        {
-                            backgroundColor: isChecked ? '#e2e2e2' : 'transparent',
-                            borderRadius: 10,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            padding: 10,
-                            zIndex: 1,
-                        },
+                        todoItemStyles.content,
                         rStyle,
+                        { backgroundColor: isChecked ? '#e2e2e2' : 'transparent' },
                     ]}
                 >
                     <CustomCheckbox isChecked={isChecked} onToggle={onChangeStatus} />
-                    <Text style={{ marginLeft: 10 }}>{item.description}</Text>
+                    <Text style={todoItemStyles.text}>{item.description}</Text>
                 </AnimatedTouchableOpacity>
             </PanGestureHandler>
         </Animated.View>

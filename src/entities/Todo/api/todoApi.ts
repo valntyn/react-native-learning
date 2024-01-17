@@ -1,5 +1,6 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { GetTodo } from '@/entities/Todo/model/types/getTodo';
+import { PostTodo } from '@/entities/Todo/model/types/postTodo';
 
 const todoApi = rtkApi.injectEndpoints({
     endpoints: (build) => ({
@@ -12,7 +13,7 @@ const todoApi = rtkApi.injectEndpoints({
                 method: 'GET',
             }),
         }),
-        postTodos: build.mutation<void, void>({
+        postTodos: build.mutation<void, PostTodo>({
             query: (body) => ({
                 url: '/todos',
                 method: 'POST',
