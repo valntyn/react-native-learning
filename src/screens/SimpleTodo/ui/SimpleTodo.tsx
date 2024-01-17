@@ -1,25 +1,20 @@
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { memo } from 'react';
 import { classNames } from '@/shared/lib/classNames/classNames';
-import { useTodos } from '@/entities/Todo/api/todoApi';
+import { TodoList } from '@/entities/Todo';
+import { Screen } from '@/shared/lib/ui/Screen';
 
 interface SimpleTodoProps {
-  className?: string;
+    className?: string;
 }
 
 export const SimpleTodo = memo((props: SimpleTodoProps) => {
     const { className } = props;
-    const { data, isLoading } = useTodos();
-
-    if (isLoading) {
-        return null;
-    }
-
-    console.log(data);
 
     return (
-        <View className={classNames('', {}, [className])}>
-            <Text>SimpleTodo</Text>
-        </View>
+        <Screen className={classNames('p-4', {}, [className])}>
+            <Text className="text-gray-500 italic mb-4">Press to finish an activity</Text>
+            <TodoList />
+        </Screen>
     );
 });

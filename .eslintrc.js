@@ -37,5 +37,7 @@ module.exports = {
         'react/no-array-index-key': 'off',
         'arrow-body-style': 'off',
         'react/style-prop-object': 'off',
+        'no-use-before-define': 'off',
+        'react-native/no-inline-styles': 'off',
     },
 };
