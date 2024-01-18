@@ -6,9 +6,11 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
     Extrapolate,
     interpolate,
+    useAnimatedProps,
     useAnimatedStyle,
     useSharedValue,
     withSpring,
+    withTiming,
 } from 'react-native-reanimated';
 import { classNames } from '@/shared/lib/classNames/classNames';
 
@@ -92,17 +94,41 @@ export const BottomSheet = forwardRef<BottomSheetPropsRef, BottomSheetProps>((pr
             borderRadius,
             transform: [{ translateY: translateY.value }],
         };
+    }, []);
+
+    const rBackdropStyle = useAnimatedStyle(() => {
+        return {
+            opacity: withTiming(active.value ? 1 : 0),
+        };
+    }, []);
+
+    const rBackDropsProps = useAnimatedProps(() => {
+        return {
+            pointerEvents: active.value ? 'auto' : 'none',
+        } as any;
     });
 
     return (
-        <GestureDetector gesture={gesture}>
+        <>
             <Animated.View
-                className={classNames('', {}, [className])}
-                style={[styles.container, rBottomSheetStyle]}
-            >
-                <View style={styles.line} />
-                {children}
-            </Animated.View>
-        </GestureDetector>
+                animatedProps={rBackDropsProps}
+                onTouchStart={() => {
+                    scrollTo(0);
+                }}
+                style={[
+                    { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.3)' },
+                    rBackdropStyle,
+                ]}
+            />
+            <GestureDetector gesture={gesture}>
+                <Animated.View
+                    className={classNames('', {}, [className])}
+                    style={[styles.container, rBottomSheetStyle]}
+                >
+                    <View style={styles.line} />
+                    {children}
+                </Animated.View>
+            </GestureDetector>
+        </>
     );
 });
