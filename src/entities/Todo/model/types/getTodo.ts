@@ -1,5 +1,5 @@
 export interface GetTodo {
     id: string;
-    description: string;
+    description?: string;
     completed: boolean;
 }

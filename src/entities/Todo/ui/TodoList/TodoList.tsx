@@ -1,7 +1,5 @@
 import { memo } from 'react';
-import {
-    Button, FlatList, ListRenderItem, StyleSheet,
-} from 'react-native';
+import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 import { GetTodo } from '@/entities/Todo';
 import { TodoItem } from '@/entities/Todo/ui/TodoItem/TodoItem';
 import { classNames } from '@/shared/lib/classNames/classNames';
@@ -11,14 +9,14 @@ import { LIST_ITEM_MARGIN } from '@/entities/Todo/todo.config';
 interface TodoListProps {
     items: GetTodo[];
     isLoading: boolean;
+    isAdding?: boolean;
     onDelete: (id: string) => void;
-    onAdd: (body: any) => () => void;
     className?: string;
 }
 
 export const TodoList = memo((props: TodoListProps) => {
     const {
-        className, items = [], isLoading, onDelete, onAdd,
+        className, items = [], isLoading, onDelete, isAdding,
     } = props;
 
     if (isLoading) {
@@ -39,27 +37,28 @@ export const TodoList = memo((props: TodoListProps) => {
         );
     }
 
-    const getTodoItem: ListRenderItem<GetTodo> = ({ item }) => (
-        <TodoItem item={item} onDelete={onDelete} key={item.id} />
-    );
+    const getTodoItem: ListRenderItem<GetTodo> = ({ item }) => {
+        if (item.id.includes('skeleton') && isAdding) {
+            return (
+                <Skeleton
+                    height={50}
+                    style={{ marginTop: LIST_ITEM_MARGIN }}
+                    border={10}
+                    width="100%"
+                />
+            );
+        }
+        return <TodoItem item={item} onDelete={onDelete} key={item.id} isAdding={isAdding} />;
+    };
 
     return (
-        <>
-            <FlatList
-                className={classNames('', {}, [className])}
-                data={items}
-                renderItem={getTodoItem}
-                keyExtractor={(item) => item.id}
-                contentContainerStyle={styles.content}
-            />
-            <Button
-                title="Add Todo"
-                onPress={onAdd({
-                    userId: '1',
-                    description: '123',
-                })}
-            />
-        </>
+        <FlatList
+            className={classNames('', {}, [className])}
+            data={[...items, { completed: false, id: 'skeleton' }]}
+            renderItem={getTodoItem}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={styles.content}
+        />
     );
 });
 
