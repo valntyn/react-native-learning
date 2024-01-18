@@ -12,7 +12,7 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
     const { data, isLoading } = useGetTodos(
         { userId },
         {
-            pollingInterval: 3000,
+            pollingInterval: 5000,
         },
     );
     const [deleteTodoMutation, { isLoading: isDeleting }] = useDeleteTodo();
@@ -29,7 +29,7 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
         (body: any) => async () => {
             await postTodoMutation({ ...body, completed: false });
         },
-        [data, postTodoMutation],
+        [postTodoMutation],
     );
 
     if (isLoading) {
