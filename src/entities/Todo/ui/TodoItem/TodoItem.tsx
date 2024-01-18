@@ -38,7 +38,7 @@ export const TodoItem = memo((props: TodoItemProps) => {
     const {
         item, className, onDelete, isDeleting, simultaneousHandlers,
     } = props;
-    const [putTodoMutation, { isLoading }] = usePutTodos();
+    const [putTodoMutation] = usePutTodos();
     const [isChecked, setIsChecked] = useState(item.completed);
 
     const onChangeStatus = useCallback(
@@ -102,7 +102,7 @@ export const TodoItem = memo((props: TodoItemProps) => {
         <Animated.View style={[todoItemStyles.container, rContainerTodoStyle]}>
             <Animated.View style={[todoItemStyles.iconContainer, rIconContainerStyle]}>
                 <FontAwesome5
-                    entering={FadeIn.duration(500)}
+                    entering={FadeIn.duration(200)}
                     name="trash-alt"
                     size={24}
                     color="tomato"
@@ -113,7 +113,7 @@ export const TodoItem = memo((props: TodoItemProps) => {
                 simultaneousHandlers={simultaneousHandlers}
             >
                 <AnimatedTouchableOpacity
-                    entering={FadeIn.duration(500)}
+                    entering={FadeIn.duration(200)}
                     onPress={() => onChangeStatus(!isChecked)}
                     style={[
                         todoItemStyles.content,

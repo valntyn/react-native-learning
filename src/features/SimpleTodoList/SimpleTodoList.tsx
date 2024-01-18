@@ -32,9 +32,5 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
         [postTodoMutation],
     );
 
-    if (isLoading) {
-        return null;
-    }
-
     return <TodoList items={data ?? []} isLoading={isLoading} onDelete={onDelete} onAdd={onAdd} />;
 });

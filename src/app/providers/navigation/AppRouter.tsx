@@ -26,7 +26,7 @@ const AppRouter = () => {
     }, []);
 
     return (
-        <Stack.Navigator initialRouteName={auth ? AppRouterEnum.HOME : AppRouterEnum.TODO}>
+        <Stack.Navigator initialRouteName={auth ? AppRouterEnum.HOME : AppRouterEnum.INITIAL}>
             {Object.values(routeConfig).map(renderWithWrapper)}
         </Stack.Navigator>
     );
