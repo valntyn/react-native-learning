@@ -1,5 +1,6 @@
-import { memo } from 'react';
-import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
+import { memo, useRef } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { GetTodo } from '@/entities/Todo';
 import { TodoItem } from '@/entities/Todo/ui/TodoItem/TodoItem';
 import { classNames } from '@/shared/lib/classNames/classNames';
@@ -18,6 +19,7 @@ export const TodoList = memo((props: TodoListProps) => {
     const {
         className, items = [], isLoading, onDelete, isAdding,
     } = props;
+    const scrollRef = useRef(null);
 
     if (isLoading) {
         return (
@@ -37,19 +39,18 @@ export const TodoList = memo((props: TodoListProps) => {
         );
     }
 
-    const getTodoItem: ListRenderItem<GetTodo> = ({ item }) => {
-        return <TodoItem item={item} onDelete={onDelete} key={item.id} />;
+    const getTodoItem = (item: GetTodo) => {
+        return (
+            <TodoItem
+                item={item}
+                onDelete={onDelete}
+                key={item.id}
+                simultaneousHandlers={scrollRef}
+            />
+        );
     };
 
-    return (
-        <FlatList
-            className={classNames('', {}, [className])}
-            data={items}
-            renderItem={getTodoItem}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.content}
-        />
-    );
+    return <ScrollView ref={scrollRef}>{items.map((i) => getTodoItem(i))}</ScrollView>;
 });
 
 const styles = StyleSheet.create({
