@@ -38,23 +38,13 @@ export const TodoList = memo((props: TodoListProps) => {
     }
 
     const getTodoItem: ListRenderItem<GetTodo> = ({ item }) => {
-        if (item.id.includes('skeleton') && isAdding) {
-            return (
-                <Skeleton
-                    height={50}
-                    style={{ marginTop: LIST_ITEM_MARGIN }}
-                    border={10}
-                    width="100%"
-                />
-            );
-        }
-        return <TodoItem item={item} onDelete={onDelete} key={item.id} isAdding={isAdding} />;
+        return <TodoItem item={item} onDelete={onDelete} key={item.id} />;
     };
 
     return (
         <FlatList
             className={classNames('', {}, [className])}
-            data={[...items, { completed: false, id: 'skeleton' }]}
+            data={items}
             renderItem={getTodoItem}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.content}

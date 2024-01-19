@@ -1,27 +1,70 @@
-import { memo, useCallback, useRef } from 'react';
 import {
-    Button, Pressable, Text, View,
-} from 'react-native';
+    memo, useCallback, useRef, useState,
+} from 'react';
+import { Keyboard, Text } from 'react-native';
 import { TodoList } from '@/entities/Todo';
 import { useDeleteTodo, useGetTodos, usePostTodos } from '@/entities/Todo/api/todoApi';
-import { BottomSheet, BottomSheetPropsRef } from '@/shared/lib/ui/BottomSheet';
+import { BottomSheet, BottomSheetPropsRef, MAX_TRANSLATE_Y } from '@/shared/lib/ui/BottomSheet';
+import { RNButton } from '@/shared/lib/ui/Button';
+import { TodoCreationContent } from './ui/TodoCreationContent/TodoCreationContent';
 
 interface SimpleTodoListProps {
-    className?: string;
     userId: string;
 }
 
 export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
-    const { className, userId } = props;
+    const { userId } = props;
     const { data, isLoading } = useGetTodos(
         { userId },
         {
             pollingInterval: 5000,
         },
     );
-    const [deleteTodoMutation, { isLoading: isDeleting }] = useDeleteTodo();
+    const [value, setValue] = useState('');
+    const [deleteTodoMutation] = useDeleteTodo();
     const [postTodoMutation, { isLoading: isPosting }] = usePostTodos();
     const ref = useRef<BottomSheetPropsRef>(null);
+
+    const closeDrawer = useCallback(() => {
+        ref?.current?.scrollTo(0);
+        Keyboard.dismiss();
+    }, []);
+
+    const openDrawer = useCallback(() => {
+        const isActive = ref?.current?.isActive();
+
+        if (isActive) {
+            closeDrawer();
+        } else {
+            ref?.current?.scrollTo(-250);
+        }
+    }, [closeDrawer]);
+
+    const onFocusChange = useCallback((isFocused: boolean) => {
+        if (isFocused) {
+            ref?.current?.scrollTo(MAX_TRANSLATE_Y);
+        }
+    }, []);
+
+    const onChangeValue = useCallback((text: string) => {
+        setValue(text);
+    }, []);
+
+    const onAdd = useCallback(async () => {
+        const body = {
+            userId: '1',
+            description: value.trim(),
+            completed: false,
+        };
+        await postTodoMutation(body);
+        closeDrawer();
+        setValue('');
+    }, [closeDrawer, postTodoMutation, value]);
+
+    const onDismiss = useCallback(async () => {
+        closeDrawer();
+        setValue('');
+    }, [closeDrawer]);
 
     const onDelete = useCallback(
         async (id: string) => {
@@ -29,24 +72,6 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
         },
         [deleteTodoMutation],
     );
-
-    const onAdd = useCallback(
-        (body: any) => async () => {
-            await postTodoMutation({ ...body, completed: false });
-        },
-        [postTodoMutation],
-    );
-
-    const openDrawer = useCallback(() => {
-        // to close the drawer
-        const isActive = ref?.current?.isActive();
-
-        if (isActive) {
-            ref?.current?.scrollTo(0);
-        } else {
-            ref?.current?.scrollTo(-200);
-        }
-    }, []);
 
     return (
         <>
@@ -56,18 +81,17 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
                 onDelete={onDelete}
                 isAdding={isPosting}
             />
-            <Pressable style={{ marginBottom: 10 }} onPress={openDrawer}>
-                <Text>Open drawer!</Text>
-            </Pressable>
-            <Button
-                title="Add Todo"
-                onPress={onAdd({
-                    userId: '1',
-                    description: '123',
-                })}
-            />
+            <RNButton fullWidth height={48} theme="initial" onPress={openDrawer}>
+                <Text>Create a new todo</Text>
+            </RNButton>
             <BottomSheet ref={ref}>
-                <View style={{ flex: 1, backgroundColor: 'orange' }} />
+                <TodoCreationContent
+                    onAdd={onAdd}
+                    onDismiss={onDismiss}
+                    onFocusChange={onFocusChange}
+                    value={value}
+                    onChangeValue={onChangeValue}
+                />
             </BottomSheet>
         </>
     );

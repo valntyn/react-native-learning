@@ -30,15 +30,10 @@ const AnimatedTouchableOpacity = Animated.createAnimatedComponent(Pressable);
 interface TodoItemProps extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
     item: GetTodo;
     onDelete: (id: string) => void;
-    isDeleting?: boolean;
-    isAdding?: boolean;
-    className?: string;
 }
 
 export const TodoItem = memo((props: TodoItemProps) => {
-    const {
-        item, className, onDelete, isDeleting, simultaneousHandlers, isAdding,
-    } = props;
+    const { item, onDelete, simultaneousHandlers } = props;
     const [putTodoMutation] = usePutTodos();
     const [isChecked, setIsChecked] = useState(item.completed);
 
@@ -98,10 +93,6 @@ export const TodoItem = memo((props: TodoItemProps) => {
             opacity: opacity.value,
         };
     });
-
-    if (!isAdding && item.id.includes('skeleton')) {
-        return null;
-    }
 
     return (
         <Animated.View style={[todoItemStyles.container, rContainerTodoStyle]}>

@@ -1,4 +1,6 @@
-import { Dimensions, StyleSheet, View } from 'react-native';
+import {
+    Dimensions, Keyboard, StyleSheet, View,
+} from 'react-native';
 import {
     forwardRef, ReactNode, useCallback, useImperativeHandle,
 } from 'react';
@@ -13,9 +15,10 @@ import Animated, {
     withTiming,
 } from 'react-native-reanimated';
 import { classNames } from '@/shared/lib/classNames/classNames';
+import { DismissKeyboard } from '@/shared/lib/components/DissmisKeyboard';
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window');
-const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 50;
+export const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + SCREEN_HEIGHT / 3.3;
 
 interface BottomSheetProps {
     className?: string;
@@ -77,7 +80,7 @@ export const BottomSheet = forwardRef<BottomSheetPropsRef, BottomSheetProps>((pr
         .onEnd(() => {
             if (translateY.value > -SCREEN_HEIGHT / 3) {
                 scrollTo(0);
-            } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
+            } else if (translateY.value < -SCREEN_HEIGHT / 2) {
                 scrollTo(MAX_TRANSLATE_Y);
             }
         });
@@ -108,27 +111,34 @@ export const BottomSheet = forwardRef<BottomSheetPropsRef, BottomSheetProps>((pr
         } as any;
     });
 
+    const onTouchStart = () => {
+        scrollTo(0);
+        Keyboard.dismiss();
+    };
+
     return (
         <>
             <Animated.View
                 animatedProps={rBackDropsProps}
-                onTouchStart={() => {
-                    scrollTo(0);
-                }}
+                onTouchStart={onTouchStart}
                 style={[
                     { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.3)' },
                     rBackdropStyle,
                 ]}
             />
-            <GestureDetector gesture={gesture}>
-                <Animated.View
-                    className={classNames('', {}, [className])}
-                    style={[styles.container, rBottomSheetStyle]}
-                >
-                    <View style={styles.line} />
-                    {children}
-                </Animated.View>
-            </GestureDetector>
+            <DismissKeyboard>
+                <GestureDetector gesture={gesture}>
+                    <DismissKeyboard>
+                        <Animated.View
+                            className={classNames('', {}, [className])}
+                            style={[styles.container, rBottomSheetStyle]}
+                        >
+                            <View style={styles.line} />
+                            {children}
+                        </Animated.View>
+                    </DismissKeyboard>
+                </GestureDetector>
+            </DismissKeyboard>
         </>
     );
 });
