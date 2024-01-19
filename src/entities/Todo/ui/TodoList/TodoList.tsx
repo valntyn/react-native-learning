@@ -1,6 +1,6 @@
-import { memo, useRef } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { memo } from 'react';
+import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
+import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 import { GetTodo } from '@/entities/Todo';
 import { TodoItem } from '@/entities/Todo/ui/TodoItem/TodoItem';
 import { classNames } from '@/shared/lib/classNames/classNames';
@@ -10,16 +10,23 @@ import { LIST_ITEM_MARGIN } from '@/entities/Todo/todo.config';
 interface TodoListProps {
     items: GetTodo[];
     isLoading: boolean;
-    isAdding?: boolean;
     onDelete: (id: string) => void;
     className?: string;
 }
 
 export const TodoList = memo((props: TodoListProps) => {
     const {
-        className, items = [], isLoading, onDelete, isAdding,
+        className, items = [], isLoading, onDelete,
     } = props;
-    const scrollRef = useRef(null);
+    const scrollY = useSharedValue(0);
+
+    const handler = useAnimatedScrollHandler({
+        onScroll: (event) => {
+            const { y } = event.contentOffset;
+
+            scrollY.value = y;
+        },
+    });
 
     if (isLoading) {
         return (
@@ -39,18 +46,29 @@ export const TodoList = memo((props: TodoListProps) => {
         );
     }
 
-    const getTodoItem = (item: GetTodo) => {
+    const getTodoItem: ListRenderItem<GetTodo> = ({ item, index }) => {
         return (
             <TodoItem
                 item={item}
                 onDelete={onDelete}
                 key={item.id}
-                simultaneousHandlers={scrollRef}
+                scrollY={scrollY}
+                index={index}
             />
         );
     };
 
-    return <ScrollView ref={scrollRef}>{items.map((i) => getTodoItem(i))}</ScrollView>;
+    return (
+        <Animated.FlatList
+            onScroll={handler}
+            className={classNames('', {}, [className])}
+            data={items}
+            renderItem={getTodoItem}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={styles.content}
+            scrollEventThrottle={16}
+        />
+    );
 });
 
 const styles = StyleSheet.create({

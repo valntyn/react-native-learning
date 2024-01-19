@@ -8,6 +8,7 @@ interface SimpleTodoProps {
     className?: string;
 }
 
+// todo filtratiion(new shared toggle) and auth
 export const SimpleTodo = memo((props: SimpleTodoProps) => {
     const { className } = props;
 

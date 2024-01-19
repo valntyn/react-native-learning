@@ -1,6 +1,8 @@
-import { Pressable, Text } from 'react-native';
+import { Pressable, Text, useWindowDimensions } from 'react-native';
 import Animated, {
+    Extrapolation,
     FadeIn,
+    interpolate,
     runOnJS,
     useAnimatedGestureHandler,
     useAnimatedStyle,
@@ -30,10 +32,16 @@ const AnimatedTouchableOpacity = Animated.createAnimatedComponent(Pressable);
 interface TodoItemProps extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
     item: GetTodo;
     onDelete: (id: string) => void;
+    scrollY: any;
+    index: number;
 }
 
+// todo avoid magic numbers, avoid any
 export const TodoItem = memo((props: TodoItemProps) => {
-    const { item, onDelete, simultaneousHandlers } = props;
+    const {
+        item, onDelete, simultaneousHandlers, scrollY, index,
+    } = props;
+    const { height } = useWindowDimensions();
     const [putTodoMutation] = usePutTodos();
     const [isChecked, setIsChecked] = useState(item.completed);
 
@@ -46,6 +54,8 @@ export const TodoItem = memo((props: TodoItemProps) => {
     );
 
     const translateX = useSharedValue(0);
+    const startPosition = 50 * index;
+    const containerHeight = height - 250 - 100;
     const itemMargin = useSharedValue(LIST_ITEM_MARGIN);
     const itemHeight = useSharedValue(LIST_ITEM_HEIGHT);
     const opacity = useSharedValue(1);
@@ -72,13 +82,15 @@ export const TodoItem = memo((props: TodoItemProps) => {
         },
     });
 
-    const rStyle = useAnimatedStyle(() => ({
-        transform: [
-            {
-                translateX: translateX.value,
-            },
-        ],
-    }));
+    const rStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    translateX: translateX.value,
+                },
+            ],
+        };
+    });
 
     const rIconContainerStyle = useAnimatedStyle(() => {
         const opacity = withTiming(translateX.value < TRANSLATE_X_THRESHOLD ? 1 : 0);
@@ -94,33 +106,56 @@ export const TodoItem = memo((props: TodoItemProps) => {
         };
     });
 
+    const rLastContainerTodoStyle = useAnimatedStyle(() => {
+        return {
+            opacity: interpolate(
+                scrollY.value,
+                [startPosition - containerHeight, startPosition - containerHeight + 350],
+                [0, 1],
+            ),
+            transform: [
+                {
+                    translateY: interpolate(
+                        scrollY.value,
+                        [startPosition - containerHeight, startPosition - containerHeight + 350],
+                        [-35, 0],
+                        Extrapolation.CLAMP,
+                    ),
+                },
+            ],
+        };
+    });
+
     return (
         <Animated.View style={[todoItemStyles.container, rContainerTodoStyle]}>
-            <Animated.View style={[todoItemStyles.iconContainer, rIconContainerStyle]}>
-                <FontAwesome5
-                    entering={FadeIn.duration(200)}
-                    name="trash-alt"
-                    size={24}
-                    color="tomato"
-                />
-            </Animated.View>
-            <PanGestureHandler
-                onGestureEvent={panGesture}
-                simultaneousHandlers={simultaneousHandlers}
-            >
-                <AnimatedTouchableOpacity
-                    entering={FadeIn.duration(200)}
-                    onPress={() => onChangeStatus(!isChecked)}
-                    style={[
-                        todoItemStyles.content,
-                        rStyle,
-                        { backgroundColor: isChecked ? '#e2e2e2' : 'transparent' },
-                    ]}
+            <Animated.View style={rLastContainerTodoStyle}>
+                <Animated.View style={[todoItemStyles.iconContainer, rIconContainerStyle]}>
+                    <FontAwesome5
+                        entering={FadeIn.duration(200)}
+                        name="trash-alt"
+                        size={24}
+                        color="tomato"
+                    />
+                </Animated.View>
+                <PanGestureHandler
+                    activeOffsetX={[-10, 10]}
+                    onGestureEvent={panGesture}
+                    simultaneousHandlers={simultaneousHandlers}
                 >
-                    <CustomCheckbox isChecked={isChecked} onToggle={onChangeStatus} />
-                    <Text style={todoItemStyles.text}>{item.description}</Text>
-                </AnimatedTouchableOpacity>
-            </PanGestureHandler>
+                    <AnimatedTouchableOpacity
+                        entering={FadeIn.duration(200)}
+                        onPress={() => onChangeStatus(!isChecked)}
+                        style={[
+                            todoItemStyles.content,
+                            rStyle,
+                            { backgroundColor: isChecked ? '#e2e2e2' : 'transparent' },
+                        ]}
+                    >
+                        <CustomCheckbox isChecked={isChecked} onToggle={onChangeStatus} />
+                        <Text style={todoItemStyles.text}>{item.description}</Text>
+                    </AnimatedTouchableOpacity>
+                </PanGestureHandler>
+            </Animated.View>
         </Animated.View>
     );
 });
