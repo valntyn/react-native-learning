@@ -108,11 +108,6 @@ export const TodoItem = memo((props: TodoItemProps) => {
 
     const rLastContainerTodoStyle = useAnimatedStyle(() => {
         return {
-            opacity: interpolate(
-                scrollY.value,
-                [startPosition - containerHeight, startPosition - containerHeight + 350],
-                [0, 1],
-            ),
             transform: [
                 {
                     translateY: interpolate(

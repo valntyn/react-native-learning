@@ -1,5 +1,5 @@
 import {
-    memo, useCallback, useRef, useState,
+    memo, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { Keyboard, Text } from 'react-native';
 import { TodoList } from '@/entities/Todo';
@@ -7,23 +7,36 @@ import { useDeleteTodo, useGetTodos, usePostTodos } from '@/entities/Todo/api/to
 import { BottomSheet, BottomSheetPropsRef, MAX_TRANSLATE_Y } from '@/shared/lib/ui/BottomSheet';
 import { RNButton } from '@/shared/lib/ui/Button';
 import { TodoCreationContent } from './ui/TodoCreationContent/TodoCreationContent';
+import { SegmentedControl } from '@/shared/lib/ui/SegmentedControl';
 
 interface SimpleTodoListProps {
     userId: string;
 }
 
+export enum filterOptions {
+    ALL = 'All',
+    Active = 'Active',
+    FINISHED = 'Finished',
+}
+
 export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
     const { userId } = props;
-    const { data, isLoading } = useGetTodos(
-        { userId },
-        {
-            pollingInterval: 5000,
-        },
-    );
     const [value, setValue] = useState('');
+    const [selectedOption, setSelectedOption] = useState(filterOptions.ALL);
+    const ref = useRef<BottomSheetPropsRef>(null);
+
+    const {
+        data, isLoading, isFetching, refetch,
+    } = useGetTodos({
+        userId,
+        filter: selectedOption,
+    });
     const [deleteTodoMutation] = useDeleteTodo();
     const [postTodoMutation, { isLoading: isPosting }] = usePostTodos();
-    const ref = useRef<BottomSheetPropsRef>(null);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch, selectedOption]);
 
     const closeDrawer = useCallback(() => {
         ref?.current?.scrollTo(0);
@@ -75,12 +88,12 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
 
     return (
         <>
-            <TodoList
-                items={data ?? []}
-                isLoading={isLoading}
-                onDelete={onDelete}
-                isAdding={isPosting}
+            <SegmentedControl
+                options={Object.values(filterOptions)}
+                selectedOption={selectedOption}
+                onOptionPress={setSelectedOption}
             />
+            <TodoList items={data ?? []} isLoading={isLoading || isFetching} onDelete={onDelete} />
             <RNButton fullWidth height={48} theme="initial" onPress={openDrawer}>
                 <Text>Create a new todo</Text>
             </RNButton>

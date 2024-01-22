@@ -1,6 +1,7 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { GetTodo } from '@/entities/Todo/model/types/getTodo';
 import { PostTodo } from '@/entities/Todo/model/types/postTodo';
+import { filterOptions } from '@/features/SimpleTodoList/SimpleTodoList';
 
 const todoApi = rtkApi
     .enhanceEndpoints({
@@ -8,14 +9,21 @@ const todoApi = rtkApi
     })
     .injectEndpoints({
         endpoints: (build) => ({
-            getTodos: build.query<GetTodo[], { userId: string }>({
-                query: ({ userId }) => ({
-                    url: '/todos',
-                    params: {
+            getTodos: build.query<GetTodo[], { userId: string; filter: filterOptions }>({
+                query: ({ userId, filter }) => {
+                    const params = {
                         userId,
-                    },
-                    method: 'GET',
-                }),
+                        ...(filter !== filterOptions.ALL && {
+                            completed: filter.includes(filterOptions.FINISHED),
+                        }),
+                    };
+
+                    return {
+                        url: '/todos',
+                        params,
+                        method: 'GET',
+                    };
+                },
                 providesTags: (_) => ['Todo'],
             }),
             postTodos: build.mutation<void, PostTodo>({
