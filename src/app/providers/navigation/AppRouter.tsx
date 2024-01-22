@@ -20,13 +20,15 @@ const AppRouter = () => {
                 key={route.name}
                 options={{
                     headerShown: route.showHeader,
+                    headerLeft: (props) => null,
+                    gestureEnabled: false,
                 }}
             />
         );
     }, []);
 
     return (
-        <Stack.Navigator initialRouteName={auth ? AppRouterEnum.HOME : AppRouterEnum.TODO}>
+        <Stack.Navigator initialRouteName={auth ? AppRouterEnum.INITIAL : AppRouterEnum.INITIAL}>
             {Object.values(routeConfig).map(renderWithWrapper)}
         </Stack.Navigator>
     );

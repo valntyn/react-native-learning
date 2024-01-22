@@ -65,14 +65,14 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
 
     const onAdd = useCallback(async () => {
         const body = {
-            userId: '1',
+            userId,
             description: value.trim(),
             completed: false,
         };
         await postTodoMutation(body);
         closeDrawer();
         setValue('');
-    }, [closeDrawer, postTodoMutation, value]);
+    }, [closeDrawer, postTodoMutation, userId, value]);
 
     const onDismiss = useCallback(async () => {
         closeDrawer();

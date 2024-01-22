@@ -29,7 +29,7 @@ export const Initial = memo(() => {
     }, []);
 
     const onSkip = useCallback(() => {
-        navigation.navigate(AppRouterEnum.HOME);
+        navigation.navigate(AppRouterEnum.AUTH);
     }, [navigation]);
 
     const onBack = useCallback(() => {

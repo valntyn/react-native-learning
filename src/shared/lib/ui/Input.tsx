@@ -29,7 +29,7 @@ export const Input = (props: InputProps) => {
     const translateY = useSharedValue(0);
 
     const onFocus = () => {
-        translateY.value = withTiming(-45);
+        translateY.value = withTiming(-25);
         setIsFocused(true);
         onFocusChange?.(true);
     };
@@ -47,7 +47,7 @@ export const Input = (props: InputProps) => {
     };
 
     const rLabelStyle = useAnimatedStyle(() => {
-        const translateX = interpolate(translateY.value, [-45, 0], [-20, 0], Extrapolate.CLAMP);
+        const translateX = interpolate(translateY.value, [-25, 0], [-20, 0], Extrapolate.CLAMP);
         return { transform: [{ translateY: translateY.value }, { translateX }] };
     }, []);
 
@@ -75,15 +75,14 @@ export const Input = (props: InputProps) => {
 
 const styles = StyleSheet.create({
     input: {
-        padding: 20,
+        padding: 10,
     },
     inputWrapper: {
+        borderBottomWidth: 2,
         borderRadius: 10,
-        borderWidth: 2,
         justifyContent: 'center',
     },
     label: {
-        fontFamily: 'InterRegular',
         fontSize: 16,
         fontWeight: 'bold',
     },

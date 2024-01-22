@@ -8,11 +8,15 @@ import {
 import { AxiosInstance } from 'axios';
 import { UserSchema } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
+import { LoginSchema } from '@/features/AuthByUserName/types/loginSchema';
 
 export interface StateSchema {
     // REQUIRED
     user: UserSchema;
     [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
+
+    // async
+    login?: LoginSchema;
 }
 
 export type OptionalRecord<K extends keyof any, T> = {
