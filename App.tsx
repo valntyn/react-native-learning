@@ -7,9 +7,10 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import AppRouter from '@/app/providers/navigation/AppRouter';
+import { Platform, SafeAreaView, StatusBar } from 'react-native';
 import { StoreProvider } from '@/app/providers/StoreProvider';
 import { Splash } from '@/shared/lib/ui/Splash';
+import AppRouter from '@/app/providers/navigation/AppRouter';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,7 +40,14 @@ export default function App() {
         <NavigationContainer>
             <StoreProvider>
                 <GestureHandlerRootView style={{ flex: 1 }}>
-                    <AppRouter />
+                    <SafeAreaView
+                        style={{
+                            flex: 1,
+                            paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+                        }}
+                    >
+                        <AppRouter />
+                    </SafeAreaView>
                 </GestureHandlerRootView>
             </StoreProvider>
         </NavigationContainer>

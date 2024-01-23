@@ -7,11 +7,13 @@ import {
     RouteParams,
 } from '@/shared/lib/config/routeConfig/routeConfig';
 import { getUserAuthData } from '@/entities/User';
+import { BottomNavigation } from './BottomNavigation';
 
 const Stack = createStackNavigator();
 
 const AppRouter = () => {
     const auth = useSelector(getUserAuthData);
+
     const renderWithWrapper = useCallback((route: RouteParams) => {
         return (
             <Stack.Screen
@@ -28,7 +30,11 @@ const AppRouter = () => {
     }, []);
 
     return (
-        <Stack.Navigator initialRouteName={auth ? AppRouterEnum.INITIAL : AppRouterEnum.INITIAL}>
+        <Stack.Navigator
+            initialRouteName={auth ? 'root' : AppRouterEnum.INITIAL}
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen name="root" component={BottomNavigation} />
             {Object.values(routeConfig).map(renderWithWrapper)}
         </Stack.Navigator>
     );

@@ -18,7 +18,6 @@ import {
 import { Skeleton } from '@/shared/lib/ui/Skeleton';
 import { isFetchBaseQueryError } from '@/shared/api/rtkApi';
 import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
-import { AppRouterEnum } from '@/shared/lib/config/routeConfig/routeConfig';
 import { User, userActions } from '@/entities/User';
 
 interface LoginProps {}
@@ -41,7 +40,7 @@ export const LoginForm = memo((props: LoginProps) => {
         (data: User) => {
             dispatch(userActions.setAuthData(data));
             dispatch(loginActions.clear());
-            navigation.navigate(AppRouterEnum.TODO);
+            navigation.navigate('root');
         },
         [dispatch, navigation],
     );

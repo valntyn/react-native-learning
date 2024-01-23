@@ -1,8 +1,9 @@
 import { memo } from 'react';
 import {
-    FlatList, Pressable, StyleSheet, Text, View,
+    FlatList, Pressable, StyleSheet, Text,
 } from 'react-native';
 import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
+import { Screen } from '@/shared/lib/ui/Screen';
 
 const days = [...Array(24)].map((el, i) => i + 1);
 
@@ -33,13 +34,13 @@ export const Home = memo(() => {
     const navigation = useAppNavigation();
 
     const getDayItem = ({ item }: { item: number }) => (
-        <Pressable style={styles.box} onPress={() => navigation.navigate('Todo')}>
+        <Pressable style={styles.box}>
             <Text style={styles.text}>{item}</Text>
         </Pressable>
     );
 
     return (
-        <View className="p-4">
+        <Screen>
             <FlatList
                 data={days}
                 renderItem={getDayItem}
@@ -47,6 +48,6 @@ export const Home = memo(() => {
                 contentContainerStyle={styles.content}
                 columnWrapperStyle={styles.column}
             />
-        </View>
+        </Screen>
     );
 });

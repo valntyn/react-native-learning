@@ -1,7 +1,9 @@
+import { FontAwesome5 } from '@expo/vector-icons';
+
 export interface StepsInterface {
     title: string;
     description: string;
-    image: string;
+    image: keyof typeof FontAwesome5.glyphMap;
 }
 
 export const onboardingSteps: StepsInterface[] = [

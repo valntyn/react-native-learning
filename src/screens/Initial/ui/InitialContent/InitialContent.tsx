@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Directions, Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { FadeIn, FadeOut, SlideInRight } from 'react-native-reanimated';
 import { ActionButtons } from '../ActionButtons/ActionButtons';
-import { Icon } from '@/shared/lib/ui/Icon';
+import { Icon, IconType } from '@/shared/lib/ui/Icon';
 import { StepsInterface } from '../../const';
 
 const styles = StyleSheet.create({
@@ -70,7 +70,11 @@ export const InitialContent = memo((props: InitialContentProps) => {
                     entering={FadeIn.duration(100)}
                     exiting={FadeOut}
                 >
-                    <Icon name={data.image} size={120} color="#cef202" />
+                    <Icon
+                        icon={{ type: IconType.FontAwesomeIcon, iconName: data.image }}
+                        size={120}
+                        color="#cef202"
+                    />
                 </Animated.View>
                 <View style={styles.content}>
                     <Animated.Text style={styles.title} entering={SlideInRight.duration(300)}>

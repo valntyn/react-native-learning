@@ -122,7 +122,10 @@ export const BottomSheet = forwardRef<BottomSheetPropsRef, BottomSheetProps>((pr
                 animatedProps={rBackDropsProps}
                 onTouchStart={onTouchStart}
                 style={[
-                    { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.3)' },
+                    {
+                        ...StyleSheet.absoluteFillObject,
+                        backgroundColor: 'rgba(0,0,0,0.3)',
+                    },
                     rBackdropStyle,
                 ]}
             />

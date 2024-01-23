@@ -20,7 +20,7 @@ interface RNButtonProps extends TouchableOpacityProps {
     style?: StyleProp<ViewStyle>;
 }
 
-const bgColors: Record<Theme, string> = {
+export const bgColors: Record<Theme, string> = {
     initial: '#2563eb',
     secondary: '#f1f5f9',
 };

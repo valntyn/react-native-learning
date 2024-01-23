@@ -1,7 +1,6 @@
 import { Text } from 'react-native';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { classNames } from '@/shared/lib/classNames/classNames';
 import { Screen } from '@/shared/lib/ui/Screen';
 import { SimpleTodoList } from '@/features/SimpleTodoList/SimpleTodoList';
 import { getUserAuthData } from '@/entities/User';
@@ -23,7 +22,7 @@ export const SimpleTodo = memo((props: SimpleTodoProps) => {
     }
 
     return (
-        <Screen className={classNames('p-4', {}, [className])}>
+        <Screen>
             <Text className="text-gray-500 italic mb-4">Press to finish an activity</Text>
             <SimpleTodoList userId={authData?.id} />
         </Screen>

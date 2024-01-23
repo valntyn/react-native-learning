@@ -1,14 +1,19 @@
 import { memo, ReactNode } from 'react';
-import { View } from 'react-native';
-import { classNames } from '@/shared/lib/classNames/classNames';
+import { StyleSheet, View } from 'react-native';
 
 interface ScreenProps {
-    className?: string;
     children: ReactNode;
 }
 
 export const Screen = memo((props: ScreenProps) => {
-    const { className, children } = props;
+    const { children } = props;
 
-    return <View className={classNames('px-4 py-4 flex-1', {}, [className])}>{children}</View>;
+    return <View style={styles.view}>{children}</View>;
+});
+
+const styles = StyleSheet.create({
+    view: {
+        paddingHorizontal: 10,
+        paddingVertical: 20,
+    },
 });

@@ -6,13 +6,14 @@ import {
     ReducersMapObject,
 } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
+import { PersistPartial } from 'redux-persist/lib/persistReducer';
 import { UserSchema } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { LoginSchema } from '@/features/AuthByUserName/types/loginSchema';
 
 export interface StateSchema {
     // REQUIRED
-    user: UserSchema;
+    user: UserSchema & PersistPartial;
     [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
     // async

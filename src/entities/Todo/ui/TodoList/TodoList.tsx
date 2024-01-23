@@ -1,9 +1,10 @@
 import { memo } from 'react';
-import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
+import {
+    FlatList, ListRenderItem, StyleSheet, useWindowDimensions,
+} from 'react-native';
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 import { GetTodo } from '@/entities/Todo';
 import { TodoItem } from '@/entities/Todo/ui/TodoItem/TodoItem';
-import { classNames } from '@/shared/lib/classNames/classNames';
 import { Skeleton } from '@/shared/lib/ui/Skeleton';
 import { LIST_ITEM_MARGIN } from '@/entities/Todo/todo.config';
 
@@ -19,6 +20,8 @@ export const TodoList = memo((props: TodoListProps) => {
         className, items = [], isLoading, onDelete,
     } = props;
     const scrollY = useSharedValue(0);
+    const { height } = useWindowDimensions();
+    const listHeight = height * 0.6;
 
     const handler = useAnimatedScrollHandler({
         onScroll: (event) => {
@@ -31,8 +34,8 @@ export const TodoList = memo((props: TodoListProps) => {
     if (isLoading) {
         return (
             <FlatList
-                className={classNames('', {}, [className])}
                 data={Array.from({ length: 6 })}
+                style={{ height: listHeight }}
                 renderItem={() => (
                     <Skeleton
                         height={50}
@@ -61,8 +64,8 @@ export const TodoList = memo((props: TodoListProps) => {
     return (
         <Animated.FlatList
             onScroll={handler}
-            className={classNames('', {}, [className])}
             data={items}
+            style={{ height: listHeight }}
             renderItem={getTodoItem}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.content}
