@@ -1,6 +1,11 @@
 import { ReactNode } from 'react';
 import {
-    StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, ViewStyle,
+    DimensionValue,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    TouchableOpacityProps,
+    ViewStyle,
 } from 'react-native';
 import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 
@@ -14,7 +19,7 @@ interface RNButtonProps extends TouchableOpacityProps {
     border?: number;
     fullWidth?: boolean;
     center?: boolean;
-    width?: number;
+    width?: DimensionValue;
     height?: number;
     textSize?: Size;
     style?: StyleProp<ViewStyle>;

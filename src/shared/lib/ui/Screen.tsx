@@ -1,14 +1,17 @@
 import { memo, ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+    StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
 
 interface ScreenProps {
     children: ReactNode;
+    style?: StyleProp<ViewStyle>;
 }
 
 export const Screen = memo((props: ScreenProps) => {
-    const { children } = props;
+    const { children, style } = props;
 
-    return <View style={styles.view}>{children}</View>;
+    return <View style={[styles.view, style]}>{children}</View>;
 });
 
 const styles = StyleSheet.create({
