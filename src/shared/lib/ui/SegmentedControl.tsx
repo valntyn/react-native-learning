@@ -3,6 +3,7 @@ import {
     StyleSheet, Text, TouchableOpacity, useWindowDimensions, View,
 } from 'react-native';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { globalStyles } from '@/app/styles/globalStyles';
 
 interface SegmentedControlProps {
     options: string[];
@@ -75,7 +76,7 @@ export const SegmentedControl = memo((props: SegmentedControlProps) => {
 
 const styles = StyleSheet.create({
     activeBox: {
-        backgroundColor: '#F1EEE8',
+        backgroundColor: globalStyles.secondary,
         borderRadius: 10,
         elevation: 3,
         height: '80%',
@@ -90,12 +91,13 @@ const styles = StyleSheet.create({
         zIndex: 0,
     },
     container: {
-        backgroundColor: '#e5e2dc',
+        backgroundColor: globalStyles.primary,
         flexDirection: 'row',
         height: 60,
     },
     labelContainer: {
         alignItems: 'center',
+        color: globalStyles.primaryText,
         fontFamily: 'Inter',
         justifyContent: 'center',
     },

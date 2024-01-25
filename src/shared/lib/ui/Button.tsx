@@ -8,6 +8,7 @@ import {
     ViewStyle,
 } from 'react-native';
 import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
+import { globalStyles } from '@/app/styles/globalStyles';
 
 type Theme = 'initial' | 'secondary';
 type Size = 'm' | 'l';
@@ -26,13 +27,13 @@ interface RNButtonProps extends TouchableOpacityProps {
 }
 
 export const bgColors: Record<Theme, string> = {
-    initial: '#2563eb',
-    secondary: '#f1f5f9',
+    initial: globalStyles.secondary,
+    secondary: globalStyles.primaryText,
 };
 
 const textColors: Record<Theme, string> = {
-    initial: '#f1f5f9',
-    secondary: '#2563eb',
+    initial: globalStyles.primaryText,
+    secondary: globalStyles.secondary,
 };
 
 const size: Record<Size, number> = {

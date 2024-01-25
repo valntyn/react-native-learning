@@ -2,8 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export const todoItemStyles = StyleSheet.create({
     container: {
+        flex: 1,
         justifyContent: 'center',
-        position: 'relative',
+        width: '100%',
     },
     content: {
         alignItems: 'center',

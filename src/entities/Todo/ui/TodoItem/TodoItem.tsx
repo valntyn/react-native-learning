@@ -36,7 +36,6 @@ interface TodoItemProps extends Pick<PanGestureHandlerProps, 'simultaneousHandle
     index: number;
 }
 
-// todo avoid magic numbers, avoid any
 export const TodoItem = memo((props: TodoItemProps) => {
     const {
         item, onDelete, simultaneousHandlers, scrollY, index,

@@ -21,7 +21,6 @@ export const TodoList = memo((props: TodoListProps) => {
     } = props;
     const scrollY = useSharedValue(0);
     const { height } = useWindowDimensions();
-    const listHeight = height * 0.6;
 
     const handler = useAnimatedScrollHandler({
         onScroll: (event) => {
@@ -35,7 +34,6 @@ export const TodoList = memo((props: TodoListProps) => {
         return (
             <FlatList
                 data={Array.from({ length: 6 })}
-                style={{ height: listHeight }}
                 renderItem={() => (
                     <Skeleton
                         height={50}
@@ -44,6 +42,7 @@ export const TodoList = memo((props: TodoListProps) => {
                         width="100%"
                     />
                 )}
+                style={{ width: '100%', height: '100%' }}
                 contentContainerStyle={styles.content}
             />
         );
@@ -65,11 +64,11 @@ export const TodoList = memo((props: TodoListProps) => {
         <Animated.FlatList
             onScroll={handler}
             data={items}
-            style={{ height: listHeight }}
             renderItem={getTodoItem}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.content}
             scrollEventThrottle={16}
+            style={{ width: '100%', height: '100%' }}
         />
     );
 });

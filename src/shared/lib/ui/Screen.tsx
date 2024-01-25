@@ -2,6 +2,7 @@ import { memo, ReactNode } from 'react';
 import {
     StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
+import { globalStyles } from '@/app/styles/globalStyles';
 
 interface ScreenProps {
     children: ReactNode;
@@ -16,7 +17,8 @@ export const Screen = memo((props: ScreenProps) => {
 
 const styles = StyleSheet.create({
     view: {
-        paddingHorizontal: 10,
-        paddingVertical: 20,
+        backgroundColor: globalStyles.background,
+        paddingBottom: 120,
+        paddingHorizontal: 20,
     },
 });

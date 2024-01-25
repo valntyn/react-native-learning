@@ -1,7 +1,7 @@
 import {
     memo, useCallback, useEffect, useRef, useState,
 } from 'react';
-import { Keyboard, Text } from 'react-native';
+import { Keyboard, Text, View } from 'react-native';
 import { TodoList } from '@/entities/Todo';
 import { useDeleteTodo, useGetTodos, usePostTodos } from '@/entities/Todo/api/todoApi';
 import { BottomSheet, BottomSheetPropsRef, MAX_TRANSLATE_Y } from '@/shared/lib/ui/BottomSheet';
@@ -87,14 +87,20 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
     );
 
     return (
-        <>
+        <View style={{ alignItems: 'center' }}>
             <SegmentedControl
                 options={Object.values(filterOptions)}
                 selectedOption={selectedOption}
                 onOptionPress={setSelectedOption}
             />
             <TodoList items={data ?? []} isLoading={isLoading || isFetching} onDelete={onDelete} />
-            <RNButton fullWidth height={48} theme="initial" onPress={openDrawer}>
+            <RNButton
+                fullWidth
+                height={48}
+                theme="initial"
+                onPress={openDrawer}
+                style={{ marginTop: 'auto' }}
+            >
                 <Text>Create a new todo</Text>
             </RNButton>
             <BottomSheet ref={ref}>
@@ -106,6 +112,6 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
                     onChangeValue={onChangeValue}
                 />
             </BottomSheet>
-        </>
+        </View>
     );
 });

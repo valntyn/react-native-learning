@@ -11,6 +11,7 @@ import { Platform, SafeAreaView, StatusBar } from 'react-native';
 import { StoreProvider } from '@/app/providers/StoreProvider';
 import { Splash } from '@/shared/lib/ui/Splash';
 import AppRouter from '@/app/providers/navigation/AppRouter';
+import { globalStyles } from '@/app/styles/globalStyles';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -43,6 +44,7 @@ export default function App() {
                     <SafeAreaView
                         style={{
                             flex: 1,
+                            backgroundColor: globalStyles.background,
                             paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
                         }}
                     >
