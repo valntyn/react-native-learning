@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { memo } from 'react';
 import { cardStyles } from './styles';
+import { RNText } from '@/shared/lib/ui/Text';
 
 interface FrontContentProps {
     className?: string;
@@ -12,7 +13,7 @@ export const FrontContent = memo((props: FrontContentProps) => {
 
     return (
         <View style={cardStyles.card}>
-            <Text>{item.title}</Text>
+            <RNText text={item.title} family="RobotoBold" />
         </View>
     );
 });

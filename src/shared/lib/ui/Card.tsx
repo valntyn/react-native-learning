@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     card: {
         borderRadius: 8,
         elevation: 5,
-        margin: 8,
         padding: 16,
     },
     normal: {

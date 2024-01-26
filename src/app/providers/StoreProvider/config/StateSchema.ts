@@ -10,6 +10,7 @@ import { PersistPartial } from 'redux-persist/lib/persistReducer';
 import { UserSchema } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { LoginSchema } from '@/features/AuthByUserName/types/loginSchema';
+import { CardsGameSchema } from '@/features/FlippingVocabularyCards/types/cardsGameSchema';
 
 export interface StateSchema {
     // REQUIRED
@@ -18,6 +19,7 @@ export interface StateSchema {
 
     // async
     login?: LoginSchema;
+    cardGame?: CardsGameSchema;
 }
 
 export type OptionalRecord<K extends keyof any, T> = {

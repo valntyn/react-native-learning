@@ -4,6 +4,7 @@ import Animated, {
     FadeIn,
     interpolate,
     runOnJS,
+    SharedValue,
     useAnimatedGestureHandler,
     useAnimatedStyle,
     useSharedValue,
@@ -33,7 +34,7 @@ const AnimatedTouchableOpacity = Animated.createAnimatedComponent(Pressable);
 interface TodoItemProps extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
     item: GetTodo;
     onDelete: (id: string) => void;
-    scrollY: any;
+    scrollY: SharedValue<number>;
     index: number;
 }
 

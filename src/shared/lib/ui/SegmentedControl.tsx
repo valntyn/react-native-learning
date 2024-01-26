@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     labelContainer: {
         alignItems: 'center',
         color: globalStyles.primaryText,
-        fontFamily: 'Inter',
+        fontFamily: 'InterBold',
         justifyContent: 'center',
     },
 });

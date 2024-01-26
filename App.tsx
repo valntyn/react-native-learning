@@ -1,9 +1,13 @@
 import { NavigationContainer } from '@react-navigation/native';
 import {
-    Inter_400Regular as InterRegular,
-    Inter_900Black as Inter900Black,
+    Inter_400Regular as InterRegular400,
+    Inter_900Black as InterBlack900,
     useFonts,
 } from '@expo-google-fonts/inter';
+import {
+    RobotoSlab_400Regular as RobotoRegular400,
+    RobotoSlab_900Black as RobotoBold900,
+} from '@expo-google-fonts/roboto-slab';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -18,8 +22,10 @@ export default function App() {
     const [appIsReady, setAppReady] = useState(false);
 
     const [fontsLoaded, fontError] = useFonts({
-        Inter: Inter900Black,
-        InterRegular,
+        InterBold: InterBlack900,
+        InterRegular: InterRegular400,
+        RobotoRegular: RobotoRegular400,
+        RobotoBold: RobotoBold900,
     });
     useEffect(() => {
         if (fontsLoaded || fontError) {

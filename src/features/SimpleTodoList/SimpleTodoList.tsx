@@ -22,7 +22,7 @@ export enum filterOptions {
 export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
     const { userId } = props;
     const [value, setValue] = useState('');
-    const [selectedOption, setSelectedOption] = useState(filterOptions.ALL);
+    const [selectedOption, setSelectedOption] = useState<filterOptions>(filterOptions.ALL);
     const ref = useRef<BottomSheetPropsRef>(null);
 
     const {

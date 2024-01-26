@@ -38,11 +38,11 @@ export const Screen = memo((props: ScreenProps) => {
     });
 
     useInterval(() => {
-        leftColor.value = withTiming(gradientColors.secondA, { duration: 1500 });
-        rightColor.value = withTiming(gradientColors.secondB, { duration: 1500 });
+        leftColor.value = withTiming(gradientColors.secondA, { duration: 3000 });
+        rightColor.value = withTiming(gradientColors.secondB, { duration: 3000 });
         setTimeout(() => {
-            leftColor.value = withTiming(gradientColors.firstA, { duration: 1500 });
-            rightColor.value = withTiming(gradientColors.firstB, { duration: 1500 });
+            leftColor.value = withTiming(gradientColors.firstA, { duration: 3000 });
+            rightColor.value = withTiming(gradientColors.firstB, { duration: 3000 });
         }, 5000);
     }, 10000);
 

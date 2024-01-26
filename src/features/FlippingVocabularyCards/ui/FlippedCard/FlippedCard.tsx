@@ -11,17 +11,19 @@ import Animated, {
 } from 'react-native-reanimated';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
-import { GetVocabulary } from '@/screens/Vocabulary/ui/VocabularyScreen';
+import { useSelector } from 'react-redux';
 import { BackContent } from '@/features/FlippingVocabularyCards/ui/CardsContent/BackContent';
 import { FrontContent } from '@/features/FlippingVocabularyCards/ui/CardsContent/FrontContent';
+import { Card } from '@/entities/Cards/model/types/getPack';
+import { getIsGameStarted } from '../../model/selectors/getCardsGameSelectors';
 
 export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 export const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.1;
 
 interface FlippedCardProps {
     activeIndex: SharedValue<number>;
-    activeItem: GetVocabulary | null;
-    item: GetVocabulary;
+    activeItem: Card | null;
+    item: Card;
     setActiveItem: () => void;
     maxVisibleItems?: number;
     index?: number;
@@ -41,6 +43,7 @@ export const FlippedCard = (props: FlippedCardProps) => {
         maxVisibleItems = 4,
     } = props;
 
+    const isGameStarted = useSelector(getIsGameStarted);
     const translateX = useSharedValue(0);
     const rotate = useSharedValue(1);
 
@@ -121,7 +124,7 @@ export const FlippedCard = (props: FlippedCardProps) => {
 
     const rCardProps = useAnimatedProps(() => {
         return {
-            pointerEvents: activeItem?.id === item.id ? 'auto' : 'none',
+            pointerEvents: activeItem?.id === item.id && isGameStarted ? 'auto' : 'none',
         } as any;
     });
 

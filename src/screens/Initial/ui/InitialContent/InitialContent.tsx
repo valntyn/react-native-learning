@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#fdfdfd',
-        fontFamily: 'Inter',
+        fontFamily: 'InterBold',
         fontSize: 36,
         letterSpacing: 1.3,
         marginBottom: 20,
