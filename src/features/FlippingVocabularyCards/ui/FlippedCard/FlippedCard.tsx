@@ -129,7 +129,7 @@ export const FlippedCard = (props: FlippedCardProps) => {
         rotate.value = rotate.value ? 0 : 1;
     };
 
-    const gradientColors = ['#ffdfba', '#ffb3ba'];
+    const gradientColors = ['#fff', '#f6fafd'];
 
     return (
         <PanGestureHandler

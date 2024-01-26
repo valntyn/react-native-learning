@@ -22,7 +22,7 @@ export const SimpleTodo = memo((props: SimpleTodoProps) => {
     }
 
     return (
-        <Screen style={{ flex: 1 }}>
+        <Screen>
             <Text className="text-gray-500 italic mb-4">Press to finish an activity</Text>
             <SimpleTodoList userId={authData?.id} />
         </Screen>

@@ -2,8 +2,8 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs/src/types';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { Icon } from '@/shared/lib/ui/Icon';
-import { bgColors } from '@/shared/lib/ui/Button';
 import { TabRouteParams } from '@/shared/lib/config/routeConfig/tabRouterConfig';
+import { globalStyles } from '@/app/styles/globalStyles';
 
 interface TabButtonProps extends BottomTabBarButtonProps {
     item: TabRouteParams;
@@ -30,7 +30,7 @@ export const TabButton = (props: TabButtonProps) => {
             <Animated.View style={[rIconStyle, styles.iconBox]}>
                 <Icon
                     icon={item.icon}
-                    color={focused ? bgColors.initial : 'grey'}
+                    color={focused ? globalStyles.primaryText : 'grey'}
                     size={item.iconSize}
                 />
             </Animated.View>

@@ -1,6 +1,6 @@
 export const globalStyles = {
     background: '#e6ddee',
-    primary: '#bedfff',
-    secondary: '#889bd3',
+    primary: '#e6ddee',
+    secondary: '#fff',
     primaryText: '#434e74',
 };

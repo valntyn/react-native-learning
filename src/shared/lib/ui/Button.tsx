@@ -27,13 +27,13 @@ interface RNButtonProps extends TouchableOpacityProps {
 }
 
 export const bgColors: Record<Theme, string> = {
-    initial: globalStyles.secondary,
-    secondary: globalStyles.primaryText,
+    initial: globalStyles.primaryText,
+    secondary: globalStyles.secondary,
 };
 
 const textColors: Record<Theme, string> = {
-    initial: globalStyles.primaryText,
-    secondary: globalStyles.secondary,
+    initial: globalStyles.secondary,
+    secondary: globalStyles.primaryText,
 };
 
 const size: Record<Size, number> = {

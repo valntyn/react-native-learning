@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
+import { gradientColors } from './Screen';
 
 interface SkeletonProps {
     width?: number | string;
@@ -16,7 +17,7 @@ export const Skeleton = (props: SkeletonProps) => {
         height = 50,
         border = 0,
         style,
-        colors = ['lightgray', '#e0e0e0', 'lightgray'],
+        colors = ['lightgray', gradientColors.firstA, 'lightgray'],
     } = props;
     const translateX = useRef(new Animated.Value(-150)).current;
     const duration = 600;

@@ -26,6 +26,7 @@ import {
     TRANSLATE_X_THRESHOLD,
 } from '@/entities/Todo/todo.config';
 import { todoItemStyles } from '@/entities/Todo/ui/TodoItem/styles';
+import { globalStyles } from '@/app/styles/globalStyles';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(Pressable);
 
@@ -142,7 +143,7 @@ export const TodoItem = memo((props: TodoItemProps) => {
                         style={[
                             todoItemStyles.content,
                             rStyle,
-                            { backgroundColor: isChecked ? '#e2e2e2' : 'transparent' },
+                            { backgroundColor: isChecked ? 'transparent' : globalStyles.primary },
                         ]}
                     >
                         <CustomCheckbox isChecked={isChecked} onToggle={onChangeStatus} />

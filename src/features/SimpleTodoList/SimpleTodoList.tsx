@@ -45,7 +45,6 @@ export const SimpleTodoList = memo((props: SimpleTodoListProps) => {
 
     const openDrawer = useCallback(() => {
         const isActive = ref?.current?.isActive();
-
         if (isActive) {
             closeDrawer();
         } else {

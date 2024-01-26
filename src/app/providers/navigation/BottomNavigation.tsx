@@ -24,6 +24,7 @@ export const BottomNavigation = memo((props: BottomNavigationProps) => {
                 component={component}
                 key={name}
                 options={{
+                    headerShown: false,
                     tabBarLabel: textLabel,
                     tabBarShowLabel: false,
                     tabBarIcon: ({ color, focused }) => (
@@ -39,6 +40,7 @@ export const BottomNavigation = memo((props: BottomNavigationProps) => {
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,
+
                 tabBarStyle: {
                     height: 60,
                     position: 'absolute',
@@ -46,6 +48,7 @@ export const BottomNavigation = memo((props: BottomNavigationProps) => {
                     right: 16,
                     left: 16,
                     borderRadius: 10,
+                    elevation: 20,
                 },
             }}
         >

@@ -1,5 +1,5 @@
 import {
-    Dimensions, Keyboard, StyleSheet, View,
+    Dimensions, Keyboard, StyleSheet, useWindowDimensions, View,
 } from 'react-native';
 import {
     forwardRef, ReactNode, useCallback, useImperativeHandle,
@@ -14,6 +14,7 @@ import Animated, {
     withSpring,
     withTiming,
 } from 'react-native-reanimated';
+import { Portal } from '@gorhom/portal';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { DismissKeyboard } from '@/shared/lib/components/DissmisKeyboard';
 
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: SCREEN_HEIGHT,
         width: SCREEN_WIDTH,
+        zIndex: 101,
     },
     line: {
         alignSelf: 'center',
@@ -54,6 +56,7 @@ export const BottomSheet = forwardRef<BottomSheetPropsRef, BottomSheetProps>((pr
     const context = useSharedValue({ y: 0 });
     const translateY = useSharedValue(0);
     const active = useSharedValue(false);
+    const { width, height } = useWindowDimensions();
 
     const scrollTo = useCallback((destination: number) => {
         'worklet';
@@ -117,7 +120,7 @@ export const BottomSheet = forwardRef<BottomSheetPropsRef, BottomSheetProps>((pr
     };
 
     return (
-        <>
+        <Portal name="sheet">
             <Animated.View
                 animatedProps={rBackDropsProps}
                 onTouchStart={onTouchStart}
@@ -125,23 +128,22 @@ export const BottomSheet = forwardRef<BottomSheetPropsRef, BottomSheetProps>((pr
                     {
                         ...StyleSheet.absoluteFillObject,
                         backgroundColor: 'rgba(0,0,0,0.3)',
+                        zIndex: 100,
                     },
                     rBackdropStyle,
                 ]}
             />
-            <DismissKeyboard>
-                <GestureDetector gesture={gesture}>
-                    <DismissKeyboard>
-                        <Animated.View
-                            className={classNames('', {}, [className])}
-                            style={[styles.container, rBottomSheetStyle]}
-                        >
-                            <View style={styles.line} />
-                            {children}
-                        </Animated.View>
-                    </DismissKeyboard>
-                </GestureDetector>
-            </DismissKeyboard>
-        </>
+            <GestureDetector gesture={gesture}>
+                <DismissKeyboard>
+                    <Animated.View
+                        className={classNames('', {}, [className])}
+                        style={[styles.container, rBottomSheetStyle]}
+                    >
+                        <View style={styles.line} />
+                        {children}
+                    </Animated.View>
+                </DismissKeyboard>
+            </GestureDetector>
+        </Portal>
     );
 });

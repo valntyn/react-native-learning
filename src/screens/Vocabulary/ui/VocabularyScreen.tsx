@@ -23,7 +23,7 @@ const data: GetVocabulary[] = [
 
 export const VocabularyScreen = memo(() => {
     return (
-        <Screen style={{ flex: 1 }}>
+        <Screen>
             <FlippingVocabularyCards data={data} />
         </Screen>
     );
