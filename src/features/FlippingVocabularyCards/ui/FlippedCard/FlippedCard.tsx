@@ -2,7 +2,6 @@ import { Dimensions, Pressable, StyleSheet } from 'react-native';
 import Animated, {
     interpolate,
     runOnJS,
-    SharedValue,
     useAnimatedGestureHandler,
     useAnimatedProps,
     useAnimatedStyle,
@@ -12,17 +11,22 @@ import Animated, {
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSelector } from 'react-redux';
+import { memo, useEffect } from 'react';
 import { BackContent } from '@/features/FlippingVocabularyCards/ui/CardsContent/BackContent';
 import { FrontContent } from '@/features/FlippingVocabularyCards/ui/CardsContent/FrontContent';
 import { Card } from '@/entities/Cards/model/types/getPack';
-import { getIsGameStarted } from '../../model/selectors/getCardsGameSelectors';
+import {
+    getActiveCard,
+    getCardIndex,
+    getIsGameStarted,
+} from '../../model/selectors/getCardsGameSelectors';
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch';
+import { cardsGameActions } from '@/features/FlippingVocabularyCards/model/slice/flippingCardsSlice';
 
 export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 export const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.1;
 
 interface FlippedCardProps {
-    activeIndex: SharedValue<number>;
-    activeItem: Card | null;
     item: Card;
     setActiveItem: () => void;
     maxVisibleItems?: number;
@@ -32,25 +36,30 @@ interface FlippedCardProps {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export const FlippedCard = (props: FlippedCardProps) => {
+export const FlippedCard = memo((props: FlippedCardProps) => {
     const {
-        activeIndex,
-        length = 1,
-        index = 1,
-        activeItem,
-        item,
-        setActiveItem,
-        maxVisibleItems = 4,
+        length = 1, index = 1, item, setActiveItem, maxVisibleItems = 8,
     } = props;
 
+    const dispatch = useAppDispatch();
     const isGameStarted = useSelector(getIsGameStarted);
+    const activeIndex = useSelector(getCardIndex);
+    const activeItem = useSelector(getActiveCard);
+
     const translateX = useSharedValue(0);
     const rotate = useSharedValue(1);
+
+    useEffect(() => {
+        if (!isGameStarted) {
+            translateX.value = 0;
+            rotate.value = 1;
+        }
+    }, [isGameStarted, rotate, translateX]);
 
     const rGeneralStyles = useAnimatedStyle(() => {
         return {
             opacity: interpolate(
-                activeIndex.value,
+                activeIndex,
                 [index - 1, index, index + 1],
                 [1 - 0.5 / maxVisibleItems, 1, 1],
             ),
@@ -59,12 +68,12 @@ export const FlippedCard = (props: FlippedCardProps) => {
                 { translateX: translateX.value },
                 {
                     translateY: withTiming(
-                        interpolate(activeIndex.value, [index - 1, index, index + 1], [-14, 0, 0]),
+                        interpolate(activeIndex, [index - 1, index, index + 1], [-14, 0, 0]),
                     ),
                 },
                 {
                     scale: withTiming(
-                        interpolate(activeIndex?.value, [index - 1, index, index + 1], [0.96, 1, 1]),
+                        interpolate(activeIndex, [index - 1, index, index + 1], [0.96, 1, 1]),
                     ),
                 },
             ],
@@ -99,6 +108,18 @@ export const FlippedCard = (props: FlippedCardProps) => {
         };
     }, [rotate]);
 
+    const onSwipeCard = (shouldBeDismissed: boolean) => {
+        if (shouldBeDismissed) {
+            translateX.value = withTiming(-SCREEN_WIDTH);
+            dispatch(cardsGameActions.increaseWrongCount());
+        } else {
+            translateX.value = withTiming(SCREEN_WIDTH);
+            dispatch(cardsGameActions.increaseCorrectCount());
+        }
+
+        setActiveItem();
+    };
+
     const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
         onActive: (event) => {
             translateX.value = event.translationX;
@@ -111,14 +132,7 @@ export const FlippedCard = (props: FlippedCardProps) => {
 
             const shouldBeDismissed = translateX.value < TRANSLATE_X_THRESHOLD;
 
-            if (shouldBeDismissed) {
-                translateX.value = withTiming(-SCREEN_WIDTH);
-            } else {
-                translateX.value = withTiming(SCREEN_WIDTH);
-            }
-
-            activeIndex.value += 1;
-            runOnJS(setActiveItem)();
+            runOnJS(onSwipeCard)(shouldBeDismissed);
         },
     });
 
@@ -132,13 +146,17 @@ export const FlippedCard = (props: FlippedCardProps) => {
         rotate.value = rotate.value ? 0 : 1;
     };
 
+    const isActiveCardVisible = () => {
+        return activeItem?.id === item.id;
+    };
+
     const gradientColors = ['#fff', '#f6fafd'];
 
     return (
         <PanGestureHandler
             activeOffsetX={[-10, 10]}
             onGestureEvent={panGesture}
-            enabled={activeItem?.id === item.id}
+            enabled={isActiveCardVisible()}
         >
             <AnimatedPressable
                 style={[rGeneralStyles, styles.container]}
@@ -158,7 +176,7 @@ export const FlippedCard = (props: FlippedCardProps) => {
             </AnimatedPressable>
         </PanGestureHandler>
     );
-};
+});
 
 const styles = StyleSheet.create({
     backCard: {

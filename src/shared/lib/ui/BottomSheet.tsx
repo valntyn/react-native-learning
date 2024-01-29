@@ -1,5 +1,5 @@
 import {
-    Dimensions, Keyboard, StyleSheet, useWindowDimensions, View,
+    Dimensions, Keyboard, StyleSheet, View,
 } from 'react-native';
 import {
     forwardRef, ReactNode, useCallback, useImperativeHandle,
@@ -56,7 +56,6 @@ export const BottomSheet = forwardRef<BottomSheetPropsRef, BottomSheetProps>((pr
     const context = useSharedValue({ y: 0 });
     const translateY = useSharedValue(0);
     const active = useSharedValue(false);
-    const { width, height } = useWindowDimensions();
 
     const scrollTo = useCallback((destination: number) => {
         'worklet';

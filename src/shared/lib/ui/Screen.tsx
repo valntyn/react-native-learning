@@ -1,6 +1,7 @@
 import { memo, ReactNode } from 'react';
 import {
     SafeAreaView,
+    StatusBar,
     StyleProp,
     StyleSheet,
     useWindowDimensions,
@@ -71,7 +72,6 @@ export const Screen = memo((props: ScreenProps) => {
             </Canvas>
             <SafeAreaView
                 style={[
-                    styles.view,
                     style,
                     {
                         flex: 1,
@@ -79,6 +79,7 @@ export const Screen = memo((props: ScreenProps) => {
                     },
                 ]}
             >
+                <StatusBar barStyle="default" />
                 {children}
             </SafeAreaView>
         </View>

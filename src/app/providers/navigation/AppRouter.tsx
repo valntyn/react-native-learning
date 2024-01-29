@@ -1,13 +1,13 @@
 import { memo, useCallback } from 'react';
-import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
 import {
     AppRouterEnum,
     routeConfig,
     RouteParams,
 } from '@/shared/lib/config/routeConfig/routeConfig';
-import { getUserAuthData } from '@/entities/User';
 import { BottomNavigation } from './BottomNavigation';
+import { getUserAuthData } from '@/entities/User';
 
 const Stack = createStackNavigator();
 
