@@ -1,73 +1,60 @@
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
-import { memo, Ref } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { memo } from 'react';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
 import { RNText } from '@/shared/lib/ui/Text';
-import {
-    CircularProgressBar,
-    CircularProgressBarRefProps,
-} from '@/shared/lib/ui/CircularProgressBar';
-import {
-    getCorrectCount,
-    getIsGameStarted,
-    getWrongCount,
-} from '@/features/FlippingVocabularyCards/model/selectors/getCardsGameSelectors';
+import { CircularProgressBar } from '@/shared/lib/ui/CircularProgressBar';
+import { getIsGameStarted } from '../../model/selectors/getCardsGameSelectors';
+import { CountAnswers } from './CountAnswers/CountAnswers';
+import { globalStyles } from '@/app/styles/globalStyles';
 
 interface GameHeaderProps {
     className?: string;
     onClearGame: () => void;
-    refTimer: Ref<CircularProgressBarRefProps>;
 }
 
 export const GameHeader = memo((props: GameHeaderProps) => {
-    const { className, onClearGame, refTimer } = props;
-    const { height } = useWindowDimensions();
+    const { className, onClearGame } = props;
 
     const isGameStarted = useSelector(getIsGameStarted);
-    const correctCount = useSelector(getCorrectCount);
-    const wrongCount = useSelector(getWrongCount);
 
     return (
         isGameStarted && (
-            <Animated.View
-                entering={FadeInUp.duration(400)}
-                style={{
-                    marginBottom: 40,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                }}
-            >
-                <View>
-                    <RNText text={`Correct ${correctCount.toString()}`} />
-                    <RNText text={`Wrong ${wrongCount.toString()}`} />
-                </View>
-                <View
-                    style={{
-                        display: 'flex',
-                        alignItems: 'flex-end',
-                        flex: 1,
-                        justifyContent: 'center',
-                    }}
-                >
-                    <RNText text="Time left:" family="InterBold" />
-                </View>
-                <View
-                    style={{
-                        height: 100,
-                        width: 100,
-                    }}
-                >
-                    <CircularProgressBar
-                        ref={refTimer}
-                        width={100}
-                        duration={15000}
-                        onComplete={onClearGame}
-                    />
+            <Animated.View entering={FadeInUp.duration(400)} style={styles.header}>
+                <CountAnswers />
+                <View style={styles.timerContainer}>
+                    <RNText text="Time left:" family="InterBold" type="defaultSecondary" />
+                    <View style={styles.timer}>
+                        <CircularProgressBar
+                            width={100}
+                            duration={50000}
+                            onComplete={onClearGame}
+                        />
+                    </View>
                 </View>
             </Animated.View>
         )
     );
 });
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    header: {
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 10,
+        justifyContent: 'center',
+        marginBottom: 40,
+    },
+    timer: {
+        height: 100,
+        width: 100,
+    },
+    timerContainer: {
+        alignItems: 'center',
+        backgroundColor: globalStyles.primaryText,
+        borderRadius: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+    },
+});

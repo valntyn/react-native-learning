@@ -19,11 +19,11 @@ export const GameButtons = memo((props: GameButtonsProps) => {
 
     return isGameStarted ? (
         <RNButton onPress={onClearGame} fullWidth style={styles.button}>
-            <RNText text="Clear game" family="InterBold" />
+            <RNText text="Finish Game" family="InterBold" type="defaultSecondary" />
         </RNButton>
     ) : (
         <RNButton onPress={onStartGame} fullWidth style={styles.button}>
-            <RNText text="Game" family="InterBold" />
+            <RNText text="Start Game" family="InterBold" type="defaultSecondary" />
         </RNButton>
     );
 });

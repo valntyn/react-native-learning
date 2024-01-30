@@ -19,7 +19,7 @@ export const FlippedCardList = memo((props: FlippedCardListProps) => {
     const isGameStarted = useSelector(getIsGameStarted);
 
     const rCardListStyles = useAnimatedStyle(() => {
-        const translateY = withTiming(isGameStarted ? height * 0.15 : 0);
+        const translateY = withTiming(isGameStarted ? height * 0.1 : 0);
 
         return {
             transform: [

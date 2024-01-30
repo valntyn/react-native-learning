@@ -50,7 +50,7 @@ export const CircularProgressBar = forwardRef<
     const reset = useCallback(() => {
         progress.value = 0;
         setRemainingTime(duration / 1000);
-    }, []);
+    }, [duration, progress]);
 
     useImperativeHandle(ref, () => ({ reset }), [reset]);
 
@@ -78,7 +78,7 @@ export const CircularProgressBar = forwardRef<
 
     useEffect(() => {
         progress.value = withTiming(1, { duration });
-    }, [duration, onComplete, progress]);
+    }, [duration, onComplete, progress, reset]);
 
     const animatedProps = useAnimatedProps(() => ({
         strokeDashoffset: CIRCLE_LENGTH * (1 - progress.value),
@@ -125,6 +125,7 @@ export const CircularProgressBar = forwardRef<
                     position: 'absolute',
                 }}
                 family="InterBold"
+                type="defaultSecondary"
                 text={`${remainingTime}`}
             />
         </View>

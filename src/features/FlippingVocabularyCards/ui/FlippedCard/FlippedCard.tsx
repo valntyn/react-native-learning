@@ -10,8 +10,8 @@ import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-g
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSelector } from 'react-redux';
 import { memo, useEffect } from 'react';
-import { BackContent } from '../CardsContent/BackContent';
-import { FrontContent } from '../CardsContent/FrontContent';
+import { CardFrontContent } from '../CardsContent/CardFrontContent';
+import { CardBackContent } from '../CardsContent/CardBackContent';
 import { Card } from '@/entities/Cards/model/types/getPack';
 import {
     getActiveCard,
@@ -120,12 +120,12 @@ export const FlippedCard = memo((props: FlippedCardProps) => {
             >
                 <Animated.View style={[styles.frontCard, rFrontCardStyles]}>
                     <LinearGradient colors={cardGradientColors} style={styles.linerGradient}>
-                        <FrontContent item={item} />
+                        <CardBackContent item={item} />
                     </LinearGradient>
                 </Animated.View>
                 <Animated.View style={[styles.backCard, rBackCardStyles]}>
                     <LinearGradient colors={cardGradientColors} style={styles.linerGradient}>
-                        <BackContent item={item} />
+                        <CardFrontContent item={item} />
                     </LinearGradient>
                 </Animated.View>
             </AnimatedPressable>

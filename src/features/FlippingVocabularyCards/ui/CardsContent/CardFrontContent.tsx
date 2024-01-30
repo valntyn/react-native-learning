@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { cardStyles } from './styles';
-import { getIsGameStarted } from '@/features/FlippingVocabularyCards/model/selectors/getCardsGameSelectors';
+import { getActiveCard, getIsGameStarted } from '../../model/selectors/getCardsGameSelectors';
 import { RNText } from '@/shared/lib/ui/Text';
 
 interface BackContentProps {
@@ -11,9 +11,14 @@ interface BackContentProps {
     item: any;
 }
 
-export const BackContent = memo((props: BackContentProps) => {
+export const CardFrontContent = memo((props: BackContentProps) => {
     const { className, item } = props;
     const isGameStarted = useSelector(getIsGameStarted);
+    const activeItem = useSelector(getActiveCard);
+
+    const isActiveCardVisible = () => {
+        return activeItem?.id === item.id;
+    };
 
     return (
         <View className={classNames('', {}, [className])} style={cardStyles.card}>
