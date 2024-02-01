@@ -42,7 +42,7 @@ export const useCardAnimation = (
                     scale: withTiming(interpolate(rotate.value, [0, 1], [1, 0.95, 1])),
                 },
                 {
-                    rotateY: withTiming(`${rotateValue}deg`, { duration: 1000 }),
+                    rotateY: withTiming(`${rotateValue}deg`, { duration: 500 }),
                 },
             ],
         };
@@ -56,7 +56,7 @@ export const useCardAnimation = (
                     scale: withTiming(interpolate(rotate.value, [1, 0], [1, 0.95, 1])),
                 },
                 {
-                    rotateY: withTiming(`${rotateValue}deg`, { duration: 1000 }),
+                    rotateY: withTiming(`${rotateValue}deg`, { duration: 500 }),
                 },
             ],
         };

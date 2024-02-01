@@ -1,4 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import {
     Inter_400Regular as InterRegular400,
     Inter_900Black as InterBlack900,
@@ -17,6 +17,16 @@ import { Splash } from '@/shared/lib/ui/Splash';
 import AppRouter from '@/app/providers/navigation/AppRouter';
 
 SplashScreen.preventAutoHideAsync();
+
+const theme = {
+    ...DefaultTheme,
+
+    colors: {
+        ...DefaultTheme.colors,
+
+        background: 'transparent',
+    },
+};
 
 export default function App() {
     const [appIsReady, setAppReady] = useState(false);
@@ -43,7 +53,7 @@ export default function App() {
     }
 
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={theme}>
             <StoreProvider>
                 <GestureHandlerRootView style={{ flex: 1 }}>
                     <PortalProvider>

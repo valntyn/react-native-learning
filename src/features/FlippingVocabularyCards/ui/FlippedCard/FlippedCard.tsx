@@ -21,6 +21,7 @@ import {
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch';
 import { cardsGameActions } from '../../model/slice/flippingCardsSlice';
 import { useCardAnimation } from './FlippedCard.hook';
+import { useHaptic } from '@/shared/lib/hooks/useHaptic';
 
 export const { width: SCREEN_WIDTH } = Dimensions.get('window');
 export const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.1;
@@ -45,6 +46,8 @@ export const FlippedCard = memo((props: FlippedCardProps) => {
     const isGameStarted = useSelector(getIsGameStarted);
     const activeIndex = useSelector(getCardIndex);
     const activeItem = useSelector(getActiveCard);
+    const hapticSelectionSuccess = useHaptic('success');
+    const hapticSelectionError = useHaptic('error');
 
     const translateX = useSharedValue(0);
     const rotate = useSharedValue(1);
@@ -56,13 +59,15 @@ export const FlippedCard = memo((props: FlippedCardProps) => {
         }
     }, [isGameStarted, rotate, translateX]);
 
-    const onSwipeCard = (shouldBeDismissed: boolean) => {
+    const onSwipeCard = async (shouldBeDismissed: boolean) => {
         if (shouldBeDismissed) {
             translateX.value = withTiming(-SCREEN_WIDTH);
             dispatch(cardsGameActions.increaseWrongCount());
+            hapticSelectionError?.();
         } else {
-            translateX.value = withTiming(SCREEN_WIDTH);
+            translateX.value = await withTiming(SCREEN_WIDTH);
             dispatch(cardsGameActions.increaseCorrectCount());
+            hapticSelectionSuccess?.();
         }
 
         setActiveItem();

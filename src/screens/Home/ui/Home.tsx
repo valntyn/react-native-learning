@@ -1,16 +1,22 @@
 import { memo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Screen } from '@/shared/lib/ui/Screen';
-import { RNText } from '@/shared/lib/ui/Text';
+import { MarkdownDisplay } from '@/shared/lib/ui/MarkdownDisplay';
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    input: {
+        backgroundColor: 'smoke',
+    },
+});
+
+const copy = '# Markdown editor';
 
 export const Home = memo(() => {
     return (
         <Screen>
-            <View>
-                <RNText text="homescreen" />
-            </View>
+            <ScrollView>
+                <MarkdownDisplay>{copy}</MarkdownDisplay>
+            </ScrollView>
         </Screen>
     );
 });

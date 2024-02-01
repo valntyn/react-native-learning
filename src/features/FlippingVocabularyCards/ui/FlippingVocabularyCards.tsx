@@ -6,11 +6,17 @@ import {
     ReducersList,
 } from '@/shared/lib/components/DynamicModule/DynamicModuleLoader';
 import { cardsGameActions, cardsGameReducer } from '../model/slice/flippingCardsSlice';
-import { getCardIndex } from '../model/selectors/getCardsGameSelectors';
+import {
+    getCardIndex,
+    getCorrectCount,
+    getWrongCount,
+} from '../model/selectors/getCardsGameSelectors';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch';
 import { GameButtons } from './GameButtons/GameButtons';
 import { FlippedCardList } from './FlippedCardList/FlippedCardList';
 import { GameHeader } from './GameHeader/GameHeader';
+import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
+import { AppRouterEnum } from '@/shared/lib/config/routeConfig/routeConfig';
 
 interface FlippingVocabularyCardsProps {
     data: Card[];
@@ -25,10 +31,19 @@ export const FlippingVocabularyCards = memo((props: FlippingVocabularyCardsProps
 
     const dispatch = useAppDispatch();
     const activeIndex = useSelector(getCardIndex);
+    const correctCount = useSelector(getCorrectCount);
+    const wrongCount = useSelector(getWrongCount);
+
+    const navigation = useAppNavigation();
 
     const onClearGame = useCallback(() => {
+        const totalAnswers = correctCount + wrongCount;
         dispatch(cardsGameActions.clearGame());
-    }, [dispatch]);
+        navigation.navigate(AppRouterEnum.CARD_GAME_RESULT, {
+            totalAnswers,
+            correctAnswers: correctCount,
+        });
+    }, [correctCount, dispatch, navigation, wrongCount]);
 
     const setActiveItem = useCallback(() => {
         dispatch(cardsGameActions.increaseActiveIndex());
