@@ -5,10 +5,11 @@ import { classNames } from '@/shared/lib/classNames/classNames';
 import { cardStyles } from './styles';
 import { getActiveCard, getIsGameStarted } from '../../model/selectors/getCardsGameSelectors';
 import { RNText } from '@/shared/lib/ui/Text';
+import { Card } from '@/entities/Cards/model/types/getPack';
 
 interface BackContentProps {
     className?: string;
-    item: any;
+    item: Card;
 }
 
 export const CardFrontContent = memo((props: BackContentProps) => {
@@ -24,7 +25,7 @@ export const CardFrontContent = memo((props: BackContentProps) => {
         let text;
 
         if (isGameStarted) {
-            text = <RNText text={isActiveCardVisible() ? item.hint : null} family="RobotoBold" />;
+            text = <RNText text={isActiveCardVisible() ? item.hint : ''} family="RobotoBold" />;
         } else {
             text = <RNText text="Press Game to Start" family="RobotoBold" />;
         }

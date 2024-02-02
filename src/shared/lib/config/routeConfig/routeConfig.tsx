@@ -15,7 +15,7 @@ export type RootStackParamList = {
     Initial: undefined;
     Auth: undefined;
     CardGame: { packId: string };
-    CardGameResult: { totalAnswers: number; correctAnswers: number };
+    CardGameResult: { totalAnswers: number; correctAnswers: number; totalCards: number };
 };
 
 export interface RouteParams {

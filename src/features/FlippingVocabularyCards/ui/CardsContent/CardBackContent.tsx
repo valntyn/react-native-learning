@@ -3,11 +3,12 @@ import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { cardStyles } from './styles';
 import { RNText } from '@/shared/lib/ui/Text';
-import { getActiveCard } from '@/features/FlippingVocabularyCards/model/selectors/getCardsGameSelectors';
+import { getActiveCard } from '../../model/selectors/getCardsGameSelectors';
+import { Card } from '@/entities/Cards/model/types/getPack';
 
 interface FrontContentProps {
     className?: string;
-    item: any;
+    item: Card;
 }
 
 export const CardBackContent = memo((props: FrontContentProps) => {
@@ -16,7 +17,7 @@ export const CardBackContent = memo((props: FrontContentProps) => {
 
     return (
         <View style={cardStyles.card}>
-            <RNText text={item.title} family="RobotoBold" />
+            <RNText text={item.word} family="RobotoBold" />
         </View>
     );
 });

@@ -47,7 +47,7 @@ export const RNButton = (props: RNButtonProps) => {
         theme = 'initial',
         height = 40,
         width = 20,
-        disabled,
+        disabled = false,
         border = 16,
         fullWidth,
         textSize = 'm',

@@ -2,10 +2,12 @@ import React from 'react';
 import {
     StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
+import { globalStyles } from '@/app/styles/globalStyles';
 
 export enum CardTheme {
     NORMAL = 'normal',
     OUTLINED = 'outlined',
+    DEFAULT = 'default',
 }
 
 interface CardProps {
@@ -30,6 +32,10 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         elevation: 5,
         padding: 16,
+    },
+    default: {
+        backgroundColor: globalStyles.primaryText,
+        borderRadius: 20,
     },
     normal: {
         backgroundColor: 'white',

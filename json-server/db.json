@@ -71,6 +71,48 @@
           "translation": "Випадковий",
           "hint": "Fruits",
           "id": 3
+        },
+        {
+          "packId": "1",
+          "word": "Randomness",
+          "translation": "Випадковість",
+          "hint": "Fruits",
+          "id": 4
+        },
+        {
+          "packId": "1",
+          "word": "Fortuitous",
+          "translation": "Випадковий",
+          "hint": "Fruits",
+          "id": 5
+        },
+        {
+          "packId": "1",
+          "word": "Casual",
+          "translation": "Випадковий",
+          "hint": "Fruits",
+          "id": 6
+        },
+        {
+          "packId": "1",
+          "word": "Randomness",
+          "translation": "Випадковість",
+          "hint": "Fruits",
+          "id": 7
+        },
+        {
+          "packId": "1",
+          "word": "Fortuitous",
+          "translation": "Випадковий",
+          "hint": "Fruits",
+          "id": 8
+        },
+        {
+          "packId": "1",
+          "word": "Casual",
+          "translation": "Випадковий",
+          "hint": "Fruits",
+          "id": 9
         }
       ]
     },
@@ -138,13 +180,7 @@
     {
       "userId": "1",
       "description": "test",
-      "completed": true,
-      "id": 58
-    },
-    {
-      "userId": "1",
-      "description": "test",
-      "completed": true,
+      "completed": false,
       "id": 59
     },
     {
@@ -162,7 +198,7 @@
     {
       "userId": "1",
       "description": "123",
-      "completed": true,
+      "completed": false,
       "id": 62
     },
     {

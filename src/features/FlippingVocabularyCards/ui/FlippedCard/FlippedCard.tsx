@@ -59,13 +59,11 @@ export const FlippedCard = memo((props: FlippedCardProps) => {
         }
     }, [isGameStarted, rotate, translateX]);
 
-    const onSwipeCard = async (shouldBeDismissed: boolean) => {
+    const onSwipeCard = (shouldBeDismissed: boolean) => {
         if (shouldBeDismissed) {
-            translateX.value = withTiming(-SCREEN_WIDTH);
             dispatch(cardsGameActions.increaseWrongCount());
             hapticSelectionError?.();
         } else {
-            translateX.value = await withTiming(SCREEN_WIDTH);
             dispatch(cardsGameActions.increaseCorrectCount());
             hapticSelectionSuccess?.();
         }
@@ -84,6 +82,12 @@ export const FlippedCard = memo((props: FlippedCardProps) => {
             }
 
             const shouldBeDismissed = translateX.value < TRANSLATE_X_THRESHOLD;
+
+            if (shouldBeDismissed) {
+                translateX.value = withTiming(-SCREEN_WIDTH);
+            } else {
+                translateX.value = withTiming(SCREEN_WIDTH);
+            }
 
             runOnJS(onSwipeCard)(shouldBeDismissed);
         },

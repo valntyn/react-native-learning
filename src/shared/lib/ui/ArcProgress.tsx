@@ -1,11 +1,12 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, ReactNode, useEffect } from 'react';
 import {
     Dimensions, StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import { Canvas, Path, Skia } from '@shopify/react-native-skia';
-import { Easing, useSharedValue, withTiming } from 'react-native-reanimated';
+import {
+    Easing, runOnJS, useSharedValue, withTiming,
+} from 'react-native-reanimated';
 import { globalStyles } from '@/app/styles/globalStyles';
-import { gradientColors } from '@/shared/lib/ui/Screen';
 
 const { width } = Dimensions.get('window');
 
@@ -13,16 +14,18 @@ interface ArcProgressProps {
     completeQnty: number;
     totalQnty: number;
     style?: StyleProp<ViewStyle>;
+    children?: ReactNode;
+    onComplete?: () => void;
 }
 
 export const ArcProgress = memo((props: ArcProgressProps) => {
     const {
-        style, totalQnty, completeQnty, ...otherProps
+        style, totalQnty, completeQnty, children, onComplete, ...otherProps
     } = props;
 
-    const strokeWidth = 20;
+    const strokeWidth = 10;
     const center = width / 2;
-    const r = (width - strokeWidth) / 2 - 40;
+    const r = (width - strokeWidth) / 2 - 90;
     const startAngle = Math.PI;
     const endAngle = Math.PI * 2;
 
@@ -43,12 +46,17 @@ export const ArcProgress = memo((props: ArcProgressProps) => {
             percentComplete.value = withTiming(
                 calculateCompletionPercentage(completeQnty, totalQnty),
                 {
-                    duration: 1500,
+                    duration: 1000,
                     easing: Easing.linear,
+                },
+                (finished) => {
+                    if (finished && onComplete) {
+                        runOnJS(onComplete)();
+                    }
                 },
             );
         }
-    }, [completeQnty, percentComplete, totalQnty]);
+    }, [completeQnty, onComplete, percentComplete, totalQnty]);
 
     if (!skiaBackGroundPath || !skiaForegroundPath) {
         return <View />;
@@ -61,26 +69,28 @@ export const ArcProgress = memo((props: ArcProgressProps) => {
                     path={skiaBackGroundPath}
                     strokeWidth={strokeWidth}
                     strokeCap="round"
-                    color={gradientColors.secondB}
+                    color={globalStyles.primary}
                     style="stroke"
                 />
                 <Path
                     path={skiaForegroundPath}
                     strokeWidth={strokeWidth}
                     strokeCap="round"
-                    color={globalStyles.secondary}
+                    color={globalStyles.primaryText}
                     style="stroke"
                     start={0}
                     end={percentComplete}
                 />
             </Canvas>
+            {children}
         </View>
     );
 });
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: 250,
+        width,
     },
 });
 

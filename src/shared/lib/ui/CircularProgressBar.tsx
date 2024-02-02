@@ -73,7 +73,7 @@ export const CircularProgressBar = forwardRef<
                 runOnJS(setRemainingTime)(duration / 1000);
             }
         },
-        [],
+        [onComplete],
     );
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { RNButton } from '@/shared/lib/ui/Button';
@@ -11,9 +11,10 @@ interface GameButtonsProps {
     onClearGame: () => void;
 }
 
+const { height } = Dimensions.get('window');
+
 export const GameButtons = memo((props: GameButtonsProps) => {
     const { className, onStartGame, onClearGame } = props;
-    const { height } = useWindowDimensions();
 
     const isGameStarted = useSelector(getIsGameStarted);
 
@@ -31,7 +32,7 @@ export const GameButtons = memo((props: GameButtonsProps) => {
 const styles = StyleSheet.create({
     button: {
         alignSelf: 'center',
-        bottom: -100,
+        bottom: -height * 0.15,
         position: 'absolute',
     },
 });
