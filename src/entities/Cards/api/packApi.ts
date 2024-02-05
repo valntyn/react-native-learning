@@ -34,6 +34,14 @@ const packApi = rtkApi
                     };
                 },
             }),
+            postCardToPack: build.mutation<void, { word: string; hint: string; packId: string }>({
+                query: (body) => ({
+                    url: '/packs/cards',
+                    method: 'POST',
+                    body,
+                }),
+                invalidatesTags: ['Pack'],
+            }),
             deletePack: build.mutation<void, { packId: string }>({
                 query: ({ packId }) => ({
                     url: `/packs/${packId}`,
@@ -45,4 +53,5 @@ const packApi = rtkApi
 
 export const useGetPacks = packApi.useGetPacksQuery;
 export const useGetPack = packApi.useGetPackQuery;
+export const usePostCardToPack = packApi.usePostCardToPackMutation;
 export const useDeletePack = packApi.useDeletePackMutation;

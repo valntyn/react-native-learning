@@ -13,11 +13,11 @@ import {
 } from '../model/selectors/getCardsGameSelectors';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch';
 import { GameButtons } from './GameButtons/GameButtons';
-import { FlippedCardList } from './FlippedCardList/FlippedCardList';
 import { GameHeader } from './GameHeader/GameHeader';
 import { useAppNavigation, useTabAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
 import { AppRouterEnum } from '@/shared/lib/config/routeConfig/routeConfig';
 import { tabRouterEnum } from '@/shared/lib/config/routeConfig/tabRouterConfig';
+import { GameCardList } from '@/features/FlippingVocabularyCards/ui/GameCardList/GameCardList';
 
 interface FlippingVocabularyCardsProps {
     data: Card[];
@@ -80,7 +80,7 @@ export const FlippingVocabularyCards = memo((props: FlippingVocabularyCardsProps
     return (
         <DynamicModuleLoader reducers={initialReducers} removeAfterMount>
             <GameHeader onClearGame={onClearGame} />
-            <FlippedCardList cards={data} setActiveItem={setActiveItem} />
+            <GameCardList cards={data} setActiveItem={setActiveItem} />
             <GameButtons onClearGame={onClearGame} onStartGame={onStartGame} />
         </DynamicModuleLoader>
     );

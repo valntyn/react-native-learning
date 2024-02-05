@@ -2,7 +2,7 @@ import { StyleSheet, Text } from 'react-native';
 import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 import { TextStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
-type Size = 'm' | 'l' | 'xl';
+type Size = 'm' | 'l' | 'xl' | 's';
 type Family = 'InterRegular' | 'InterBold' | 'RobotoRegular' | 'RobotoBold';
 type Type = 'success' | 'warn' | 'error' | 'default' | 'defaultSecondary';
 
@@ -18,6 +18,7 @@ interface RNTextProps extends TextStyle {
 }
 
 const size: Record<Size, number> = {
+    s: 12,
     m: 16,
     l: 20,
     xl: 24,

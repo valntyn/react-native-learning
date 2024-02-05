@@ -17,6 +17,7 @@ import { useInterval } from '@/shared/lib/hooks/useInterval';
 interface ScreenProps {
     children: ReactNode;
     style?: StyleProp<ViewStyle>;
+    withBottom?: boolean;
 }
 
 export const gradientColors = {
@@ -27,7 +28,7 @@ export const gradientColors = {
 };
 
 export const Screen = memo((props: ScreenProps) => {
-    const { children, style } = props;
+    const { children, style, withBottom = true } = props;
 
     const leftColor = useSharedValue(gradientColors.firstA);
     const rightColor = useSharedValue(gradientColors.firstB);
@@ -53,8 +54,8 @@ export const Screen = memo((props: ScreenProps) => {
                 {
                     flex: 1,
                     position: 'relative',
-                    paddingBottom: height * 0.2,
-                    paddingTop: height * 0.05,
+                    paddingBottom: withBottom ? height * 0.2 : height * 0.05,
+                    paddingTop: height * 0.02,
                 },
                 styles.view,
             ]}

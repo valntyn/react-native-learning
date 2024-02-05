@@ -5,9 +5,6 @@ import { memo } from 'react';
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 import { PackItem } from '@/screens/Vocabulary/ui/PackItem/PackItem';
 import { useGetPacks } from '@/entities/Cards/api/packApi';
-import { RNButton } from '@/shared/lib/ui/Button';
-import { AppRouterEnum } from '@/shared/lib/config/routeConfig/routeConfig';
-import { RNText } from '@/shared/lib/ui/Text';
 import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
 import { GetPack } from '@/entities/Cards/model/types/getPack';
 
@@ -43,20 +40,12 @@ export const PacksList = memo((props: PacksListProps) => {
 
     const getPackItem: ListRenderItem<GetPack> = ({ item, index }) => {
         return (
-            <>
-                <PackItem
-                    item={item}
-                    index={index}
-                    scrollY={scrollY}
-                    containerHeight={height * 0.65}
-                />
-                <RNButton
-                    width={100}
-                    onPress={() => navigation.navigate(AppRouterEnum.CARD_GAME, { packId: item.id })}
-                >
-                    <RNText text="game" />
-                </RNButton>
-            </>
+            <PackItem
+                item={item}
+                index={index}
+                scrollY={scrollY}
+                containerHeight={height * 0.65}
+            />
         );
     };
 

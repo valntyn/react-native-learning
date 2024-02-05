@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { cardStyles } from './styles';
 import { RNText } from '@/shared/lib/ui/Text';
 import { getActiveCard } from '../../model/selectors/getCardsGameSelectors';
 import { Card } from '@/entities/Cards/model/types/getPack';
+import { cardStyles } from '@/widgets/FlippedCard/ui/styles';
 
 interface FrontContentProps {
     className?: string;

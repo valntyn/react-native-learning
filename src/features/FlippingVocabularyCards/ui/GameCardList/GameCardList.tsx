@@ -2,9 +2,9 @@ import { useWindowDimensions } from 'react-native';
 import { memo } from 'react';
 import Animated, { FadeInLeft, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
-import { FlippedCard } from '@/features/FlippingVocabularyCards';
 import { Card } from '@/entities/Cards/model/types/getPack';
 import { getIsGameStarted } from '../../model/selectors/getCardsGameSelectors';
+import { GameFlippedCard } from '../GameFlippedCard/GameFlippedCard';
 
 interface FlippedCardListProps {
     className?: string;
@@ -12,7 +12,7 @@ interface FlippedCardListProps {
     setActiveItem: () => void;
 }
 
-export const FlippedCardList = memo((props: FlippedCardListProps) => {
+export const GameCardList = memo((props: FlippedCardListProps) => {
     const { className, cards, setActiveItem } = props;
     const { height } = useWindowDimensions();
 
@@ -37,7 +37,7 @@ export const FlippedCardList = memo((props: FlippedCardListProps) => {
         >
             {cards.map((i, index) => {
                 return (
-                    <FlippedCard
+                    <GameFlippedCard
                         key={i.id}
                         index={index}
                         length={cards.length}

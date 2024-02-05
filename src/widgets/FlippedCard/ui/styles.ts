@@ -10,6 +10,8 @@ export const cardStyles = StyleSheet.create({
         display: 'flex',
         height: 200,
         justifyContent: 'center',
+        position: 'relative',
         width: '100%',
+        zIndex: 1000,
     },
 });

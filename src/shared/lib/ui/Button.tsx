@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import {
     DimensionValue,
     StyleSheet,
-    Text,
     TouchableOpacity,
     TouchableOpacityProps,
     ViewStyle,
@@ -10,7 +9,7 @@ import {
 import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 import { globalStyles } from '@/app/styles/globalStyles';
 
-type Theme = 'initial' | 'secondary';
+type Theme = 'initial' | 'secondary' | 'outlined';
 type Size = 'm' | 'l';
 
 interface RNButtonProps extends TouchableOpacityProps {
@@ -29,11 +28,13 @@ interface RNButtonProps extends TouchableOpacityProps {
 export const bgColors: Record<Theme, string> = {
     initial: globalStyles.primaryText,
     secondary: globalStyles.secondary,
+    outlined: 'transparent',
 };
 
 const textColors: Record<Theme, string> = {
     initial: globalStyles.secondary,
     secondary: globalStyles.primaryText,
+    outlined: globalStyles.secondary,
 };
 
 const size: Record<Size, number> = {
@@ -64,11 +65,6 @@ export const RNButton = (props: RNButtonProps) => {
             borderRadius: border || 0,
             borderWidth: 0,
             justifyContent: 'center',
-            padding: 10,
-        },
-        buttonText: {
-            color: textColors[theme],
-            fontSize: size[textSize],
         },
         centerButton: {
             alignSelf: 'center',
@@ -103,7 +99,7 @@ export const RNButton = (props: RNButtonProps) => {
             onPress={onPress}
             {...otherProps}
         >
-            <Text style={styles.buttonText}>{children}</Text>
+            {children}
         </TouchableOpacity>
     );
 };

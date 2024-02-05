@@ -7,9 +7,8 @@ import Animated, {
     withTiming,
 } from 'react-native-reanimated';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useSelector } from 'react-redux';
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { CardFrontContent } from '../CardsContent/CardFrontContent';
 import { CardBackContent } from '../CardsContent/CardBackContent';
 import { Card } from '@/entities/Cards/model/types/getPack';
@@ -20,8 +19,9 @@ import {
 } from '../../model/selectors/getCardsGameSelectors';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch';
 import { cardsGameActions } from '../../model/slice/flippingCardsSlice';
-import { useCardAnimation } from './FlippedCard.hook';
+import { useCardAnimation } from './GameFlippedCard.hook';
 import { useHaptic } from '@/shared/lib/hooks/useHaptic';
+import { FlippedCard } from '@/widgets/FlippedCard/ui/FlippedCard';
 
 export const { width: SCREEN_WIDTH } = Dimensions.get('window');
 export const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.1;
@@ -35,9 +35,8 @@ interface FlippedCardProps {
 }
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-const cardGradientColors = ['#fff', '#f6fafd'];
 
-export const FlippedCard = memo((props: FlippedCardProps) => {
+export const GameFlippedCard = memo((props: FlippedCardProps) => {
     const {
         length = 1, index = 1, item, setActiveItem, maxVisibleItems = 8,
     } = props;
@@ -93,11 +92,10 @@ export const FlippedCard = memo((props: FlippedCardProps) => {
         },
     });
 
-    const { rGeneralStyles, rFrontCardStyles, rBackCardStyles } = useCardAnimation(
+    const { rGeneralStyles } = useCardAnimation(
         activeIndex,
         index,
         translateX,
-        rotate,
         maxVisibleItems,
         length,
     );
@@ -112,9 +110,9 @@ export const FlippedCard = memo((props: FlippedCardProps) => {
         rotate.value = rotate.value ? 0 : 1;
     };
 
-    const isActiveCardVisible = () => {
+    const isActiveCardVisible = useCallback(() => {
         return activeItem?.id === item.id;
-    };
+    }, [activeItem?.id, item.id]);
 
     return (
         <PanGestureHandler
@@ -127,16 +125,11 @@ export const FlippedCard = memo((props: FlippedCardProps) => {
                 animatedProps={rCardProps}
                 onPress={onRotate}
             >
-                <Animated.View style={[styles.frontCard, rFrontCardStyles]}>
-                    <LinearGradient colors={cardGradientColors} style={styles.linerGradient}>
-                        <CardBackContent item={item} />
-                    </LinearGradient>
-                </Animated.View>
-                <Animated.View style={[styles.backCard, rBackCardStyles]}>
-                    <LinearGradient colors={cardGradientColors} style={styles.linerGradient}>
-                        <CardFrontContent item={item} />
-                    </LinearGradient>
-                </Animated.View>
+                <FlippedCard
+                    rotate={rotate}
+                    childrenBack={<CardFrontContent item={item} index={index} />}
+                    childrenFront={<CardBackContent item={item} />}
+                />
             </AnimatedPressable>
         </PanGestureHandler>
     );

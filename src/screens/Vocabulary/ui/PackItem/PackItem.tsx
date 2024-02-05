@@ -8,8 +8,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Card, CardTheme } from '@/shared/lib/ui/Card';
 import { RNText } from '@/shared/lib/ui/Text';
-import { GetPack } from '@/screens/Vocabulary/model/types/getPack';
 import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
+import { GetPack } from '@/entities/Cards/model/types/getPack';
+import { RNButton } from '@/shared/lib/ui/Button';
+import { Icon, IconType } from '@/shared/lib/ui/Icon';
+import { AppRouterEnum } from '@/shared/lib/config/routeConfig/routeConfig';
 
 interface PacksListProps {
     className?: string;
@@ -48,7 +51,21 @@ export const PackItem = memo((props: PacksListProps) => {
     return (
         <Animated.View style={rLastContainerTodoStyle}>
             <Card style={{ marginTop }} theme={CardTheme.OUTLINED}>
-                <RNText text={item.title} numberOfLines={1} />
+                <RNText text={item.title} numberOfLines={1} family="RobotoRegular" />
+                <RNButton
+                    style={{
+                        position: 'absolute',
+                        right: 10,
+                        bottom: 2,
+                        backgroundColor: 'transparent',
+                    }}
+                    height={48}
+                    width={48}
+                    theme="secondary"
+                    onPress={() => navigation.navigate(AppRouterEnum.PRE_GAME_SCREEN, { packId: item.id })}
+                >
+                    <Icon icon={{ type: IconType.Ionicon, iconName: 'settings-sharp' }} size={24} />
+                </RNButton>
             </Card>
         </Animated.View>
     );

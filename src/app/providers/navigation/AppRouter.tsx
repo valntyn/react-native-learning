@@ -31,9 +31,7 @@ const AppRouter = () => {
                 key={route.name}
                 options={{
                     cardStyleInterpolator: forFade,
-                    headerShown: route.showHeader,
-                    headerLeft: (props) => null,
-                    gestureEnabled: false,
+                    headerShown: false,
                 }}
             />
         );

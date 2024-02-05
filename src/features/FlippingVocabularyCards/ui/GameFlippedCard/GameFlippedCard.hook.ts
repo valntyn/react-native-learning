@@ -6,7 +6,6 @@ export const useCardAnimation = (
     activeIndex: number,
     index: number,
     translateX: SharedValue<number>,
-    rotate: SharedValue<number>,
     maxVisibleItems: number,
     length: number,
 ) => {
@@ -34,37 +33,7 @@ export const useCardAnimation = (
         };
     }, [activeIndex]);
 
-    const rFrontCardStyles = useAnimatedStyle(() => {
-        const rotateValue = interpolate(rotate.value, [0, 1], [0, 180]);
-        return {
-            transform: [
-                {
-                    scale: withTiming(interpolate(rotate.value, [0, 1], [1, 0.95, 1])),
-                },
-                {
-                    rotateY: withTiming(`${rotateValue}deg`, { duration: 500 }),
-                },
-            ],
-        };
-    }, [rotate]);
-
-    const rBackCardStyles = useAnimatedStyle(() => {
-        const rotateValue = interpolate(rotate.value, [0, 1], [180, 360]);
-        return {
-            transform: [
-                {
-                    scale: withTiming(interpolate(rotate.value, [1, 0], [1, 0.95, 1])),
-                },
-                {
-                    rotateY: withTiming(`${rotateValue}deg`, { duration: 500 }),
-                },
-            ],
-        };
-    }, [rotate]);
-
     return {
         rGeneralStyles,
-        rFrontCardStyles,
-        rBackCardStyles,
     };
 };
