@@ -3,12 +3,12 @@ import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { RNText } from '@/shared/lib/ui/Text';
 import { getActiveCard } from '../../model/selectors/getCardsGameSelectors';
-import { Card } from '@/entities/Cards/model/types/getPack';
 import { cardStyles } from '@/widgets/FlippedCard/ui/styles';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 interface FrontContentProps {
     className?: string;
-    item: Card;
+    item: GetCard;
 }
 
 export const CardBackContent = memo((props: FrontContentProps) => {

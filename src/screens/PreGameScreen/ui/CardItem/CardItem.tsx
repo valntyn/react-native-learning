@@ -1,14 +1,14 @@
 import { Pressable, StyleSheet } from 'react-native';
 import { memo, useCallback, useState } from 'react';
 import { useSharedValue } from 'react-native-reanimated';
-import { Card } from '@/entities/Cards/model/types/getPack';
 import { FlippedCard } from '@/widgets/FlippedCard';
 import { CardEditFront } from '../EditContent/CardEditFront';
 import { CardEditBack } from '../EditContent/CardEditBack';
 import { CardButtons } from '@/screens/PreGameScreen/ui/CardItem/CardButtons/CardButtons';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 interface CardItemProps {
-    item: Card;
+    item: GetCard;
     className?: string;
 }
 

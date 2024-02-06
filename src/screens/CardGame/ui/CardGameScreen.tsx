@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 import { Screen } from '@/shared/lib/ui/Screen';
 import { AppRouterEnum, RootStackParamList } from '@/shared/lib/config/routeConfig/routeConfig';
 import { FlippingVocabularyCards } from '@/features/FlippingVocabularyCards';
-import { useGetPack } from '@/entities/Cards/api/packApi';
+import { useGetCards } from '@/entities/Cards/api/cardApi';
 
 const styles = StyleSheet.create({});
 
@@ -12,7 +12,7 @@ export const CardGameScreen = memo(
     ({ route }: NativeStackScreenProps<RootStackParamList, AppRouterEnum.CARD_GAME>) => {
         const { params } = route;
 
-        const { data } = useGetPack({
+        const { data } = useGetCards({
             packId: params.packId,
         });
 
@@ -22,7 +22,7 @@ export const CardGameScreen = memo(
 
         return (
             <Screen>
-                <FlippingVocabularyCards data={data.cards} />
+                <FlippingVocabularyCards data={data} />
             </Screen>
         );
     },

@@ -4,9 +4,9 @@ import {
 import { memo } from 'react';
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 import { PackItem } from '@/screens/Vocabulary/ui/PackItem/PackItem';
-import { useGetPacks } from '@/entities/Cards/api/packApi';
+import { useGetPacks } from '@/entities/Pack/api/packApi';
 import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
-import { GetPack } from '@/entities/Cards/model/types/getPack';
+import { GetPack } from '@/entities/Pack/model/types/getPack';
 
 interface PacksListProps {
     className?: string;
@@ -40,12 +40,7 @@ export const PacksList = memo((props: PacksListProps) => {
 
     const getPackItem: ListRenderItem<GetPack> = ({ item, index }) => {
         return (
-            <PackItem
-                item={item}
-                index={index}
-                scrollY={scrollY}
-                containerHeight={height * 0.65}
-            />
+            <PackItem item={item} index={index} scrollY={scrollY} containerHeight={height * 0.65} />
         );
     };
 

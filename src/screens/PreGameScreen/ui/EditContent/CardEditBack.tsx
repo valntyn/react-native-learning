@@ -1,13 +1,13 @@
 import { StyleSheet, TextInput, View } from 'react-native';
 import { memo } from 'react';
-import { Card } from '@/entities/Cards/model/types/getPack';
 import { cardStyles } from '@/widgets/FlippedCard/ui/styles';
 import { cardEditSharedStyles } from '@/screens/PreGameScreen/ui/EditContent/styles';
 import { RNText } from '@/shared/lib/ui/Text';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 interface CardEditBackProps {
     className?: string;
-    item: Card;
+    item: GetCard;
     content: { word: string; hint: string };
     onChangeContent: (newContent: { word: string; hint: string }) => void;
 }

@@ -12,5 +12,6 @@ export const cardEditSharedStyles = StyleSheet.create({
     textArea: {
         fontFamily: 'InterRegular',
         fontSize: 22,
+        height: '100%',
     },
 });

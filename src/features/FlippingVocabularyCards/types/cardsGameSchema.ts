@@ -1,9 +1,9 @@
-import { Card } from '@/entities/Cards/model/types/getPack';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 export interface CardsGameSchema {
     isStarted: boolean;
     activeIndex: number;
     wrongCount: number;
     correctCount: number;
-    activeCard: Card | null;
+    activeCard: GetCard | null;
 }

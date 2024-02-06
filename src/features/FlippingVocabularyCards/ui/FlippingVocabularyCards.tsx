@@ -1,6 +1,5 @@
 import { memo, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Card } from '@/entities/Cards/model/types/getPack';
 import {
     DynamicModuleLoader,
     ReducersList,
@@ -18,9 +17,10 @@ import { useAppNavigation, useTabAppNavigation } from '@/shared/lib/hooks/useApp
 import { AppRouterEnum } from '@/shared/lib/config/routeConfig/routeConfig';
 import { tabRouterEnum } from '@/shared/lib/config/routeConfig/tabRouterConfig';
 import { GameCardList } from '@/features/FlippingVocabularyCards/ui/GameCardList/GameCardList';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 interface FlippingVocabularyCardsProps {
-    data: Card[];
+    data: GetCard[];
 }
 
 const initialReducers: ReducersList = {

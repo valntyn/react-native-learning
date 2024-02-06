@@ -49,107 +49,102 @@
     {
       "userId": "1",
       "title": "Vegetables",
-      "id": 1,
-      "cards": [
-        {
-          "packId": "1",
-          "word": "Randomness",
-          "translation": "Випадковість",
-          "hint": "Fruits",
-          "id": 1
-        },
-        {
-          "packId": "1",
-          "word": "Fortuitous",
-          "translation": "Випадковий",
-          "hint": "Fruits",
-          "id": 2
-        },
-        {
-          "packId": "1",
-          "word": "Casual",
-          "translation": "Випадковий",
-          "hint": "Fruits",
-          "id": 3
-        },
-        {
-          "packId": "1",
-          "word": "Randomness",
-          "translation": "Випадковість",
-          "hint": "Fruits",
-          "id": 4
-        },
-        {
-          "packId": "1",
-          "word": "Fortuitous",
-          "translation": "Випадковий",
-          "hint": "Fruits",
-          "id": 5
-        },
-        {
-          "packId": "1",
-          "word": "Casual",
-          "translation": "Випадковий",
-          "hint": "Fruits",
-          "id": 6
-        },
-        {
-          "packId": "1",
-          "word": "Randomness",
-          "translation": "Випадковість",
-          "hint": "Fruits",
-          "id": 7
-        },
-        {
-          "packId": "1",
-          "word": "Fortuitous",
-          "translation": "Випадковий",
-          "hint": "Fruits",
-          "id": 8
-        },
-        {
-          "packId": "1",
-          "word": "Casual",
-          "translation": "Випадковий",
-          "hint": "Fruits",
-          "id": 9
-        }
-      ]
+      "id": "1"
     },
     {
       "userId": "1",
       "title": "Fruits",
-      "id": 2,
-      "cards": [
-        {
-          "packId": "2",
-          "word": "Pineapple",
-          "translation": "Ананас",
-          "hint": "Fruits",
-          "id": 5
-        },
-        {
-          "packId": "2",
-          "word": "Watermelon",
-          "translation": "Кавун",
-          "hint": "Fruits",
-          "id": 6
-        }
-      ]
+      "id": "2"
     },
     {
       "userId": "1",
       "title": "Synonyms",
-      "id": 3,
-      "cards": [
-        {
-          "packId": "3",
-          "word": "Mango",
-          "translation": "Манго",
-          "hint": "Fruits",
-          "id": 4
-        }
-      ]
+      "id": "3"
+    }
+  ],
+  "cards": [
+    {
+      "packId": "1",
+      "word": "Randomness",
+      "translation": "Випадковість",
+      "hint": "Fruits",
+      "id": 1
+    },
+    {
+      "packId": "1",
+      "word": "Fortuitous",
+      "translation": "Випадковий",
+      "hint": "Fruits",
+      "id": 2
+    },
+    {
+      "packId": "1",
+      "word": "Casual",
+      "translation": "Випадковий",
+      "hint": "Fruits",
+      "id": 3
+    },
+    {
+      "packId": "1",
+      "word": "Randomness",
+      "translation": "Випадковість",
+      "hint": "Fruits",
+      "id": 4
+    },
+    {
+      "packId": "1",
+      "word": "Fortuitous",
+      "translation": "Випадковий",
+      "hint": "Fruits",
+      "id": 5
+    },
+    {
+      "packId": "1",
+      "word": "Casual",
+      "translation": "Випадковий",
+      "hint": "Fruits",
+      "id": 6
+    },
+    {
+      "packId": "1",
+      "word": "Randomness",
+      "translation": "Випадковість",
+      "hint": "Fruits",
+      "id": 7
+    },
+    {
+      "packId": "1",
+      "word": "Fortuitous",
+      "translation": "Випадковий",
+      "hint": "Fruits",
+      "id": 8
+    },
+    {
+      "packId": "1",
+      "word": "Casual",
+      "translation": "Випадковий",
+      "hint": "Fruits",
+      "id": 9
+    },
+    {
+      "packId": "2",
+      "word": "Pineapple",
+      "translation": "Ананас",
+      "hint": "Fruits",
+      "id": 10
+    },
+    {
+      "packId": "2",
+      "word": "Watermelon",
+      "translation": "Кавун",
+      "hint": "Fruits",
+      "id": 11
+    },
+    {
+      "packId": "1",
+      "hint": "asdsad",
+      "word": "teeest",
+      "id": 12
     }
   ],
   "todos": [

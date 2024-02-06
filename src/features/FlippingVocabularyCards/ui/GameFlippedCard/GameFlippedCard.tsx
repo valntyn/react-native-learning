@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import { memo, useCallback, useEffect } from 'react';
 import { CardFrontContent } from '../CardsContent/CardFrontContent';
 import { CardBackContent } from '../CardsContent/CardBackContent';
-import { Card } from '@/entities/Cards/model/types/getPack';
 import {
     getActiveCard,
     getCardIndex,
@@ -22,12 +21,13 @@ import { cardsGameActions } from '../../model/slice/flippingCardsSlice';
 import { useCardAnimation } from './GameFlippedCard.hook';
 import { useHaptic } from '@/shared/lib/hooks/useHaptic';
 import { FlippedCard } from '@/widgets/FlippedCard/ui/FlippedCard';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 export const { width: SCREEN_WIDTH } = Dimensions.get('window');
 export const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.1;
 
 interface FlippedCardProps {
-    item: Card;
+    item: GetCard;
     setActiveItem: () => void;
     maxVisibleItems?: number;
     index?: number;

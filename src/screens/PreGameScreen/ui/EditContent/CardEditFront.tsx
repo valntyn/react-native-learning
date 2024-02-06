@@ -1,14 +1,14 @@
 import { StyleSheet, TextInput, View } from 'react-native';
 import { memo } from 'react';
-import { Card } from '@/entities/Cards/model/types/getPack';
 import { cardStyles } from '@/widgets/FlippedCard/ui/styles';
 import { RNText } from '@/shared/lib/ui/Text';
 import { cardEditSharedStyles } from '@/screens/PreGameScreen/ui/EditContent/styles';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 interface BackContentProps {
     className?: string;
     content: { word: string; hint: string };
-    item: Card;
+    item: GetCard;
     onChangeContent: (newContent: { word: string; hint: string }) => void;
 }
 

@@ -9,10 +9,10 @@ import Animated, {
 import { Card, CardTheme } from '@/shared/lib/ui/Card';
 import { RNText } from '@/shared/lib/ui/Text';
 import { useAppNavigation } from '@/shared/lib/hooks/useAppNavigation';
-import { GetPack } from '@/entities/Cards/model/types/getPack';
 import { RNButton } from '@/shared/lib/ui/Button';
 import { Icon, IconType } from '@/shared/lib/ui/Icon';
 import { AppRouterEnum } from '@/shared/lib/config/routeConfig/routeConfig';
+import { GetPack } from '@/entities/Pack/model/types/getPack';
 
 interface PacksListProps {
     className?: string;

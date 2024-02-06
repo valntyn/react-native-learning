@@ -1,5 +1,5 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { GetPack } from '../model/types/getPack';
+import { GetPack } from '../../Pack/model/types/getPack';
 
 const packApi = rtkApi
     .enhanceEndpoints({

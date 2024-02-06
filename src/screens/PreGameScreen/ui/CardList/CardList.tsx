@@ -2,19 +2,19 @@ import {
     FlatList, ListRenderItem, StyleSheet, useWindowDimensions,
 } from 'react-native';
 import { memo } from 'react';
-import { Card } from '@/entities/Cards/model/types/getPack';
 import { CardItem } from '../CardItem/CardItem';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 interface CardListProps {
     className?: string;
-    cards: Card[];
+    cards: GetCard[];
 }
 
 export const CardList = memo((props: CardListProps) => {
     const { className, cards } = props;
     const { height } = useWindowDimensions();
 
-    const getCardItem: ListRenderItem<Card> = ({ item }) => {
+    const getCardItem: ListRenderItem<GetCard> = ({ item }) => {
         return <CardItem item={item} key={item.id} />;
     };
 

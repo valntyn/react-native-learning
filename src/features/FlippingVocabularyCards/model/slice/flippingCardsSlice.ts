@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CardsGameSchema } from '../../types/cardsGameSchema';
-import { Card } from '@/entities/Cards/model/types/getPack';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 const initialState: CardsGameSchema = {
     isStarted: false,
@@ -26,7 +26,7 @@ export const flippingCardsSlice = createSlice({
         increaseWrongCount: (state) => {
             state.wrongCount += 1;
         },
-        setActiveCard: (state, action: PayloadAction<Card>) => {
+        setActiveCard: (state, action: PayloadAction<GetCard>) => {
             state.activeCard = action.payload;
         },
         clearGame: (state) => {

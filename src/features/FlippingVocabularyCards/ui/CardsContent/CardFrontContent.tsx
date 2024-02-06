@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { getActiveCard, getIsGameStarted } from '../../model/selectors/getCardsGameSelectors';
 import { RNText } from '@/shared/lib/ui/Text';
-import { Card } from '@/entities/Cards/model/types/getPack';
 import { cardStyles } from '@/widgets/FlippedCard/ui/styles';
+import { GetCard } from '@/entities/Cards/model/types/getCard';
 
 interface BackContentProps {
     className?: string;
     index: number;
-    item: Card;
+    item: GetCard;
 }
 
 export const CardFrontContent = memo((props: BackContentProps) => {
